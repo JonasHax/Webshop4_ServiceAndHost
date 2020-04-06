@@ -14,7 +14,7 @@ namespace Services.DataAccess {
 
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = DESKTOP-CE5TKNM\SQLEXPRESS; Integrated Security=true; Database=Webshop44";
         }
 
         public Product GetProduct(int id) {
@@ -31,7 +31,7 @@ namespace Services.DataAccess {
                         foundProduct = new Product() {
                             StyleNumber = reader.GetInt32(reader.GetOrdinal("styleNumber")),
                             Description = reader.GetString(reader.GetOrdinal("prodDescription")),
-                            Name = reader.GetString(reader.GetOrdinal("prodName")),
+                            Name = reader.GetString(reader.GetOrdinal("name")),
                             State = reader.GetBoolean(reader.GetOrdinal("prodState")),
                             Price = reader.GetDecimal(reader.GetOrdinal("price"))
                         };
