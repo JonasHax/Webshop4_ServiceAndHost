@@ -26,6 +26,12 @@ namespace ClientTest.ProductService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProductService/GetANumber", ReplyAction="http://tempuri.org/IProductService/GetANumberResponse")]
         System.Threading.Tasks.Task<int> GetANumberAsync(int number);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProductService/GetProductVersionsByProductID", ReplyAction="http://tempuri.org/IProductService/GetProductVersionsByProductIDResponse")]
+        Services.Model.ProductVersion[] GetProductVersionsByProductID(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProductService/GetProductVersionsByProductID", ReplyAction="http://tempuri.org/IProductService/GetProductVersionsByProductIDResponse")]
+        System.Threading.Tasks.Task<Services.Model.ProductVersion[]> GetProductVersionsByProductIDAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +75,14 @@ namespace ClientTest.ProductService {
         
         public System.Threading.Tasks.Task<int> GetANumberAsync(int number) {
             return base.Channel.GetANumberAsync(number);
+        }
+        
+        public Services.Model.ProductVersion[] GetProductVersionsByProductID(int id) {
+            return base.Channel.GetProductVersionsByProductID(id);
+        }
+        
+        public System.Threading.Tasks.Task<Services.Model.ProductVersion[]> GetProductVersionsByProductIDAsync(int id) {
+            return base.Channel.GetProductVersionsByProductIDAsync(id);
         }
     }
 }
