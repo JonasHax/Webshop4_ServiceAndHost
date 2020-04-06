@@ -31,7 +31,7 @@ namespace Services.DataAccess {
                         foundProduct = new Product() {
                             StyleNumber = reader.GetInt32(reader.GetOrdinal("styleNumber")),
                             Description = reader.GetString(reader.GetOrdinal("prodDescription")),
-                            Name = reader.GetString(reader.GetOrdinal("name")),
+                            Name = reader.GetString(reader.GetOrdinal("prodName")),
                             State = reader.GetBoolean(reader.GetOrdinal("prodState")),
                             Price = reader.GetDecimal(reader.GetOrdinal("price"))
                         };
