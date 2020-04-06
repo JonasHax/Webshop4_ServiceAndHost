@@ -19,12 +19,6 @@
   <wsdl:message name="IProductService_GetANumber_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetANumberResponse" />
   </wsdl:message>
-  <wsdl:message name="IProductService_GetProductVersionsByProductID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetProductVersionsByProductID" />
-  </wsdl:message>
-  <wsdl:message name="IProductService_GetProductVersionsByProductID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetProductVersionsByProductIDResponse" />
-  </wsdl:message>
   <wsdl:portType name="IProductService">
     <wsdl:operation name="GetProduct">
       <wsdl:input wsaw:Action="http://tempuri.org/IProductService/GetProduct" message="tns:IProductService_GetProduct_InputMessage" />
@@ -33,10 +27,6 @@
     <wsdl:operation name="GetANumber">
       <wsdl:input wsaw:Action="http://tempuri.org/IProductService/GetANumber" message="tns:IProductService_GetANumber_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProductService/GetANumberResponse" message="tns:IProductService_GetANumber_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetProductVersionsByProductID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProductService/GetProductVersionsByProductID" message="tns:IProductService_GetProductVersionsByProductID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProductService/GetProductVersionsByProductIDResponse" message="tns:IProductService_GetProductVersionsByProductID_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IProductService" type="tns:IProductService">
@@ -52,15 +42,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetANumber">
       <soap:operation soapAction="http://tempuri.org/IProductService/GetANumber" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetProductVersionsByProductID">
-      <soap:operation soapAction="http://tempuri.org/IProductService/GetProductVersionsByProductID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
