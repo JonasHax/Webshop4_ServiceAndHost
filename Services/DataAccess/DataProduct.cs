@@ -13,8 +13,8 @@ namespace Services.DataAccess {
         private readonly string _connectionString;
 
         public DataProduct() {
-            _connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            //_connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
+            //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
         }
 
         public Product GetProduct(int id) {
@@ -39,25 +39,26 @@ namespace Services.DataAccess {
                 }
             }
 
-            foundProduct.ProductVersions = GetProductVersionsByProductID(foundProduct).ToList();
+            foundProduct.ProductVersions = GetProductVersionsByProductID(id).ToList();
 
             return foundProduct;
         }
 
-        private List<ProductVersion> GetProductVersionsByProductID(Product product) {
+        public List<ProductVersion> GetProductVersionsByProductID(int id) {
             List<ProductVersion> list = new List<ProductVersion>();
+            //Product product = GetProduct(id);
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 ProductVersion prodVersion = null;
                 connection.Open();
                 using (SqlCommand prodVersionCommand = connection.CreateCommand()) {
                     prodVersionCommand.CommandText = "SELECT * FROM ProductVersion WHERE productID = @ID";
-                    prodVersionCommand.Parameters.AddWithValue("ID", product.StyleNumber);
+                    prodVersionCommand.Parameters.AddWithValue("ID", id);
 
                     SqlDataReader reader = prodVersionCommand.ExecuteReader();
                     while (reader.Read()) {
                         prodVersion = new ProductVersion() {
-                            Product = product,
+                            Product = null,
                             ColorCode = reader.GetString(reader.GetOrdinal("colorCode")),
                             SizeCode = reader.GetString(reader.GetOrdinal("sizeCode")),
                             Stock = reader.GetInt32(reader.GetOrdinal("stock"))
@@ -70,32 +71,32 @@ namespace Services.DataAccess {
 
             return list;
         }
+
+        //private List<ProductVersion> PopulateProduct(Product prodToPopulate) {
+        //    List<ProductVersion> list = new List<ProductVersion>();
+
+        //    using (SqlConnection connection = new SqlConnection(_connectionString)) {
+        //        ProductVersion prodVersion = null;
+        //        connection.Open();
+        //        using (SqlCommand prodVersionCommand = connection.CreateCommand()) {
+        //            prodVersionCommand.CommandText = "SELECT * FROM ProductVersion WHERE productID = @ID";
+        //            prodVersionCommand.Parameters.AddWithValue("ID", prodToPopulate.StyleNumber);
+
+        //            SqlDataReader reader = prodVersionCommand.ExecuteReader();
+
+        //            while (reader.Read()) {
+        //                prodVersion = new ProductVersion() {
+        //                    Product = prodToPopulate,
+        //                    ColorCode = reader.GetString(reader.GetOrdinal("colorCode")),
+        //                    SizeCode = reader.GetString(reader.GetOrdinal("sizeCode")),
+        //                    Stock = reader.GetInt32(reader.GetOrdinal("stock"))
+        //                };
+        //                //Console.WriteLine(prodVersion);
+        //                list.Add(prodVersion);
+        //            }
+        //        }
+        //    }
+        //    return list;
+        //}
     }
-
-    //private List<ProductVersion> PopulateProduct(Product prodToPopulate) {
-    //    List<ProductVersion> list = new List<ProductVersion>();
-
-    //    using (SqlConnection connection = new SqlConnection(_connectionString)) {
-    //        ProductVersion prodVersion = null;
-    //        connection.Open();
-    //        using (SqlCommand prodVersionCommand = connection.CreateCommand()) {
-    //            prodVersionCommand.CommandText = "SELECT * FROM ProductVersion WHERE productID = @ID";
-    //            prodVersionCommand.Parameters.AddWithValue("ID", prodToPopulate.StyleNumber);
-
-    //            SqlDataReader reader = prodVersionCommand.ExecuteReader();
-
-    //            while (reader.Read()) {
-    //                prodVersion = new ProductVersion() {
-    //                    Product = prodToPopulate,
-    //                    ColorCode = reader.GetString(reader.GetOrdinal("colorCode")),
-    //                    SizeCode = reader.GetString(reader.GetOrdinal("sizeCode")),
-    //                    Stock = reader.GetInt32(reader.GetOrdinal("stock"))
-    //                };
-    //                //Console.WriteLine(prodVersion);
-    //                list.Add(prodVersion);
-    //            }
-    //        }
-    //    }
-    //    return list;
-    //}
 }

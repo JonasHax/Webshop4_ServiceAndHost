@@ -20,9 +20,9 @@ namespace Services.Service {
             return pc.GetProduct(id);
         }
 
-        //public List<ProductVersion> GetProductVersionsByProductID(int id) {
-        //    DataProduct dp = new DataProduct();
-        //    return dp.GetProductVersionsByProductID(id);
-        //}
+        public List<ProductVersion> GetProductVersionsByProductID(int id) {
+            DataProduct dp = new DataProduct();
+            return dp.GetProductVersionsByProductID(id);
+        }
     }
 }
