@@ -44,7 +44,7 @@ namespace Services.DataAccess {
             return foundProduct;
         }
 
-        public List<ProductVersion> GetProductVersionsByProductID(int id) {
+        private List<ProductVersion> GetProductVersionsByProductID(int id) {
             List<ProductVersion> list = new List<ProductVersion>();
             //Product product = GetProduct(id);
 
