@@ -55,9 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\ProductService\ClientTest.ProductService.Product.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\ProductService\service.wsdl" />
     <None Include="Connected Services\ProductService\service.xsd">
       <SubType>Designer</SubType>
@@ -68,6 +65,8 @@
     <None Include="Connected Services\ProductService\Services.Model.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Services.Model.Product.datasource" />
+    <None Include="Properties\DataSources\Services.Model.ProductVersion.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -86,6 +85,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{3012d57a-9f62-446c-ae1d-d0bb834cb584}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

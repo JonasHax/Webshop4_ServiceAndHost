@@ -13,7 +13,7 @@ namespace HostServices {
         private static void Main(string[] args) {
             Console.WriteLine("***** Console Based WCF Host *****");
             using (ServiceHost productServiceHost = new ServiceHost(typeof(ProductService))) {
-                // Open the host ans start listening for incoming calls
+                // Open the host and start listening for incoming calls
                 productServiceHost.Open();
                 //employeeServiceHost.Open();
 

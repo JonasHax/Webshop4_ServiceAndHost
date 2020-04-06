@@ -35,5 +35,13 @@ namespace Services.Model {
         public override string ToString() {
             return $"Varenummer: {StyleNumber} \nNavn: {Name}\nPris: {Price},-\nBeskrivelse: {Description}\nTilgængelig: {State}"; /*\nLager: {Stock} \nStr.: {SizeCode} \nFarve: {ColorCode}*/
         }
+
+        //public void AddProductVersion(ProductVersion prodVer) {
+        //    ProductVersions.Add(prodVer);
+        //}
+
+        public List<ProductVersion> GetProductVersions() {
+            return this.ProductVersions;
+        }
     }
 }

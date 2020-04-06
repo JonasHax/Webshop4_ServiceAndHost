@@ -22,12 +22,15 @@ namespace Services {
             //Console.WriteLine(product2);
 
             product = service.GetProduct(3);
-
             Console.WriteLine(product);
-            foreach (ProductVersion productVersion in product.ProductVersions) {
-                Console.WriteLine(productVersion);
-                //Console.WriteLine(productVersion.Product);
+            foreach (var item in product.ProductVersions) {
+                Console.WriteLine(item);
+                Console.WriteLine(item.Product.Name);
             }
+            //foreach (ProductVersion productVersion in product.ProductVersions) {
+            //    Console.WriteLine(productVersion);
+            //    //Console.WriteLine(productVersion.Product);
+            //}
 
             Console.Read();
         }
