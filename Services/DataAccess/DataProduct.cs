@@ -12,11 +12,15 @@ namespace Services.DataAccess {
     public class DataProduct {
         private readonly string _connectionString;
 
+
+        // Connectionstring for your database, you might need to change it to your own specific address. 
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = AKSEL-PC\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
+
+        // Method to get the base product from the database.
         public Product GetProduct(int id) {
             Product foundProduct = null;
 
@@ -44,6 +48,7 @@ namespace Services.DataAccess {
             return foundProduct;
         }
 
+        // Method that gets all the subproducts from the base product.
         private List<ProductVersion> GetProductVersionsByProductID(int id) {
             List<ProductVersion> list = new List<ProductVersion>();
             //Product product = GetProduct(id);
