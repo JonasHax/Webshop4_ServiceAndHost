@@ -14,7 +14,7 @@ namespace Services.DataAccess {
 
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
         public Product GetProduct(int id) {
