@@ -15,5 +15,10 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.GetProduct(id);
         }
+
+        public List<Product> GetAllProducts() {
+            DataProduct dp = new DataProduct();
+            return dp.GetAllProducts();
+        }
     }
 }

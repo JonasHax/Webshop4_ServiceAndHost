@@ -12,13 +12,11 @@ namespace Services.DataAccess {
     public class DataProduct {
         private readonly string _connectionString;
 
-
-        // Connectionstring for your database, you might need to change it to your own specific address. 
+        // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = AKSEL-PC\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
         }
-
 
         // Method to get the base product from the database.
         public Product GetProduct(int id) {
@@ -77,31 +75,34 @@ namespace Services.DataAccess {
             return list;
         }
 
-        //private List<ProductVersion> PopulateProduct(Product prodToPopulate) {
-        //    List<ProductVersion> list = new List<ProductVersion>();
+        // Retrieves all the products connected with its subproducts from the database
+        public List<Product> GetAllProducts() {
+            List<Product> productList = new List<Product>();
 
-        //    using (SqlConnection connection = new SqlConnection(_connectionString)) {
-        //        ProductVersion prodVersion = null;
-        //        connection.Open();
-        //        using (SqlCommand prodVersionCommand = connection.CreateCommand()) {
-        //            prodVersionCommand.CommandText = "SELECT * FROM ProductVersion WHERE productID = @ID";
-        //            prodVersionCommand.Parameters.AddWithValue("ID", prodToPopulate.StyleNumber);
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand getProducts = connection.CreateCommand()) {
+                    getProducts.CommandText = "SELECT * FROM Product";
 
-        //            SqlDataReader reader = prodVersionCommand.ExecuteReader();
+                    SqlDataReader reader = getProducts.ExecuteReader();
+                    while (reader.Read()) {
+                        Product newProduct = new Product() {
+                            StyleNumber = reader.GetInt32(reader.GetOrdinal("styleNumber")),
+                            Description = reader.GetString(reader.GetOrdinal("prodDescription")),
+                            Name = reader.GetString(reader.GetOrdinal("prodName")),
+                            State = reader.GetBoolean(reader.GetOrdinal("prodState")),
+                            Price = reader.GetDecimal(reader.GetOrdinal("price"))
+                        };
+                        productList.Add(newProduct);
+                    }
+                }
+            }
 
-        //            while (reader.Read()) {
-        //                prodVersion = new ProductVersion() {
-        //                    Product = prodToPopulate,
-        //                    ColorCode = reader.GetString(reader.GetOrdinal("colorCode")),
-        //                    SizeCode = reader.GetString(reader.GetOrdinal("sizeCode")),
-        //                    Stock = reader.GetInt32(reader.GetOrdinal("stock"))
-        //                };
-        //                //Console.WriteLine(prodVersion);
-        //                list.Add(prodVersion);
-        //            }
-        //        }
-        //    }
-        //    return list;
-        //}
+            foreach (Product product in productList) {
+                product.ProductVersions = GetProductVersionsByProductID(product.StyleNumber).ToList();
+            }
+
+            return productList;
+        }
     }
 }

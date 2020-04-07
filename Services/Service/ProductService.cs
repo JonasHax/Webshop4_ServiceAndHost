@@ -11,6 +11,11 @@ namespace Services.Service {
 
     public class ProductService : IProductService {
 
+        public List<Product> GetAllProducts() {
+            ProductController pc = new ProductController();
+            return pc.GetAllProducts();
+        }
+
         public int GetANumber(int number) {
             return number + 2;
         }

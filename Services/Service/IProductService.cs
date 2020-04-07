@@ -17,6 +17,9 @@ namespace Services.Service {
         [OperationContract]
         int GetANumber(int number);
 
+        [OperationContract]
+        List<Product> GetAllProducts();
+
         //[OperationContract]
         //List<ProductVersion> GetProductVersionsByProductID(int id);
     }
