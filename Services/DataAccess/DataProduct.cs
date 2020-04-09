@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.DataAccess {
-
     public class DataProduct {
         private readonly string _connectionString;
 

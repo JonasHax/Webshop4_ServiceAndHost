@@ -10,30 +10,58 @@ namespace HostServices {
 
     internal class Host {
 
-        private static void Main(string[] args) {
-            Console.WriteLine("***** Console Based WCF Host *****");
-            using (ServiceHost productServiceHost = new ServiceHost(typeof(ProductService))) {
+        private static void Main(string[] args)
+        {
+
+            using (ServiceHost productServiceHost = new ServiceHost(typeof(ProductService)))
+            {
                 // Open the host and start listening for incoming calls
                 productServiceHost.Open();
                 //employeeServiceHost.Open();
 
-                if (productServiceHost.State == CommunicationState.Opened) {
+                if (productServiceHost.State == CommunicationState.Opened)
+                {
                     DisplayHostInfo(productServiceHost);
                     //DisplayHostInfo(employeeServiceHost);
                     // Keep the service running until the Enter key is pressed
                     Console.WriteLine("The service is ready.");
                     Console.WriteLine("Press the Enter key to terminate service.");
-                } else {
+                }
+                else
+                {
                     Console.WriteLine("The service is not ready.");
                     Console.WriteLine("Press the Enter key to terminate.");
                 }
                 Console.ReadLine();
             }
-
-            Console.ReadLine();
         }
+            //    using (ServiceHost customerServiceHost = new ServiceHost(typeof(CustomerService)))
+            //    {
+            //        // Open the host and start listening for incoming calls
+            //        customerServiceHost.Open();
+            //        //employeeServiceHost.Open();
 
-        private static void DisplayHostInfo(ServiceHost host) {
+            //        if (customerServiceHost.State == CommunicationState.Opened)
+            //        {
+            //            DisplayHostInfo(customerServiceHost);
+            //            //DisplayHostInfo(employeeServiceHost);
+            //            // Keep the service running until the Enter key is pressed
+            //            Console.WriteLine("The service is ready.");
+            //            Console.WriteLine("Press the Enter key to terminate service.");
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("The service is not ready.");
+            //            Console.WriteLine("Press the Enter key to terminate.");
+            //        }
+            //        Console.ReadLine();
+            //    }
+
+            //    Console.ReadLine();
+            //}
+
+
+            private static void DisplayHostInfo(ServiceHost host) {
             Console.WriteLine();
             Console.WriteLine("*-- Host Info --*");
 
