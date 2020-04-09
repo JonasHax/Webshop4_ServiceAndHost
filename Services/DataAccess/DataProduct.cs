@@ -15,7 +15,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop";
         }
 
         // Method to get the base product from the database.
@@ -103,6 +103,84 @@ namespace Services.DataAccess {
             }
 
             return productList;
+        }
+
+        public bool InsertProduct(Product productToInsert) {
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand insertCommand = connection.CreateCommand()) {
+                    insertCommand.CommandText = "INSERT INTO Product VALUES (@Name, @Description, @State, @Price)";
+                    insertCommand.Parameters.AddWithValue("Name", productToInsert.Name);
+                    insertCommand.Parameters.AddWithValue("Description", productToInsert.Description);
+                    insertCommand.Parameters.AddWithValue("State", productToInsert.State);
+                    insertCommand.Parameters.AddWithValue("Price", productToInsert.Price);
+
+                    int rows = insertCommand.ExecuteNonQuery();
+
+                    if (rows > 0) {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<string> GetAllColors() {
+            List<string> listOfColors = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand getColorsCommand = connection.CreateCommand()) {
+                    getColorsCommand.CommandText = "SELECT * FROM ColorCode";
+
+                    SqlDataReader reader = getColorsCommand.ExecuteReader();
+                    while (reader.Read()) {
+                        string color = reader.GetString(reader.GetOrdinal("color"));
+                        listOfColors.Add(color);
+                    }
+                }
+            }
+
+            return listOfColors;
+        }
+
+        public List<string> GetAllSizes() {
+            List<string> listOfSizes = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand getSizesCommand = connection.CreateCommand()) {
+                    getSizesCommand.CommandText = "SELECT * FROM SizeCode";
+
+                    SqlDataReader reader = getSizesCommand.ExecuteReader();
+                    while (reader.Read()) {
+                        string size = reader.GetString(reader.GetOrdinal("size"));
+                        listOfSizes.Add(size);
+                    }
+                }
+            }
+
+            return listOfSizes;
+        }
+
+        public List<string> GetAllCategories() {
+            List<string> listOfCategories = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand getCategoriesCommand = connection.CreateCommand()) {
+                    getCategoriesCommand.CommandText = "SELECT * FROM Category";
+
+                    SqlDataReader reader = getCategoriesCommand.ExecuteReader();
+                    while (reader.Read()) {
+                        string category = reader.GetString(reader.GetOrdinal("categoryName"));
+                        listOfCategories.Add(category);
+                    }
+                }
+            }
+
+            return listOfCategories;
         }
     }
 }

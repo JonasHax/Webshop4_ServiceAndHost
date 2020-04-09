@@ -20,5 +20,25 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.GetAllProducts();
         }
+
+        public bool InsertProduct(Product productToInsert) {
+            DataProduct dp = new DataProduct();
+            return dp.InsertProduct(productToInsert);
+        }
+
+        public List<string> GetAllCategories() {
+            DataProduct dp = new DataProduct();
+            return dp.GetAllCategories();
+        }
+
+        public List<string> GetAllColors() {
+            DataProduct dp = new DataProduct();
+            return dp.GetAllColors();
+        }
+
+        public List<string> GetAllSizes() {
+            DataProduct dp = new DataProduct();
+            return dp.GetAllSizes();
+        }
     }
 }

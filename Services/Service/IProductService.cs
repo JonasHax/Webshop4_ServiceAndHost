@@ -20,6 +20,18 @@ namespace Services.Service {
         [OperationContract]
         List<Product> GetAllProducts();
 
+        [OperationContract]
+        bool InsertProduct(Product productToInsert);
+
+        [OperationContract]
+        List<string> GetAllSizes();
+
+        [OperationContract]
+        List<string> GetAllColors();
+
+        [OperationContract]
+        List<string> GetAllCategories();
+
         //[OperationContract]
         //List<ProductVersion> GetProductVersionsByProductID(int id);
     }
