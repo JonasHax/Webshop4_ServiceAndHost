@@ -11,6 +11,16 @@ namespace Services.Service {
 
     public class ProductService : IProductService {
 
+        public List<string> GetAllColors() {
+            ProductController pc = new ProductController();
+            return pc.GetAllColors();
+        }
+
+        public List<string> GetAllSizes() {
+            ProductController pc = new ProductController();
+            return pc.GetAllSizes();
+        }
+
         public List<Product> GetAllProducts() {
             ProductController pc = new ProductController();
             return pc.GetAllProducts();
@@ -23,6 +33,21 @@ namespace Services.Service {
         public Product GetProduct(int id) {
             ProductController pc = new ProductController();
             return pc.GetProduct(id);
+        }
+
+        public bool InsertProduct(Product productToInsert) {
+            ProductController pc = new ProductController();
+            return pc.InsertProduct(productToInsert);
+        }
+
+        public List<string> GetAllCategories() {
+            ProductController pc = new ProductController();
+            return pc.GetAllCategories();
+        }
+
+        public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
+            ProductController pc = new ProductController();
+            return pc.InsertProductVersion(prodVerToInsert, styleNumber);
         }
 
         //public List<ProductVersion> GetProductVersionsByProductID(int id) {
