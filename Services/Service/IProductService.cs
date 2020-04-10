@@ -32,6 +32,9 @@ namespace Services.Service {
         [OperationContract]
         List<string> GetAllCategories();
 
+        [OperationContract]
+        bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber);
+
         //[OperationContract]
         //List<ProductVersion> GetProductVersionsByProductID(int id);
     }

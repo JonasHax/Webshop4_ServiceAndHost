@@ -40,5 +40,10 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.GetAllSizes();
         }
+
+        public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
+            DataProduct dp = new DataProduct();
+            return dp.InsertProductVersion(prodVerToInsert, styleNumber);
+        }
     }
 }
