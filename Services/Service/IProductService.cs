@@ -32,6 +32,9 @@ namespace Services.Service {
         [OperationContract]
         List<string> GetAllCategories();
 
+        [OperationContract]
+        List<string> GetCategory(int id);
+
         //[OperationContract]
         //List<ProductVersion> GetProductVersionsByProductID(int id);
     }

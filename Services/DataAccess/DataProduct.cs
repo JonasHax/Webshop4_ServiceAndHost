@@ -14,7 +14,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
         // Method to get the base product from the database.
@@ -181,5 +181,34 @@ namespace Services.DataAccess {
 
             return listOfCategories;
         }
+
+        // Method that returns the Category from given product ID
+        public List<string> GetCategory(int id)
+        {
+            List<string> foundCat = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand getCommand = connection.CreateCommand())
+                {
+                    getCommand.CommandText = "select categoryName from CategoryProduct where styleNumber = @ID";
+                    getCommand.Parameters.AddWithValue("ID", id);
+
+                    SqlDataReader reader = getCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+
+                        string category = reader.GetString(reader.GetOrdinal("categoryName"));
+                        foundCat.Add(category);
+                        Console.WriteLine(reader.GetString(reader.GetOrdinal("categoryName")));
+                    }
+                }
+            }
+
+            return foundCat;
+
+        }
     }
+
 }
