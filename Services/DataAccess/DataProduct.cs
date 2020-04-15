@@ -15,7 +15,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = DESKTOP-EKHMISL\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
         // Method to get the base product from the database.
@@ -225,37 +225,5 @@ namespace Services.DataAccess {
 
             return listOfCategories;
         }
-
-        public bool InsertProductCategoryRelation(int styleNumber, string category)
-        {
-            bool result = false;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    using (SqlCommand command = connection.CreateCommand())
-                    {
-                        command.CommandText = "INSERT INTO CategoryProduct VALUES (@ID, @Category)";
-                        command.Parameters.AddWithValue("ID", styleNumber);
-                        command.Parameters.AddWithValue("Category", category);
-
-                        int rows = command.ExecuteNonQuery();
-
-                        if (rows > 0)
-                        {
-                            result = true; 
-                        }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                result = false;
-                Console.WriteLine(e.StackTrace);
-            }
-            return result;
-        }
-
     }
 }

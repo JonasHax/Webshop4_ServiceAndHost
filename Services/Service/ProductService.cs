@@ -45,6 +45,12 @@ namespace Services.Service {
             return pc.GetAllCategories();
         }
 
+        public List<string> GetCategory(int id)
+        {
+            ProductController pc = new ProductController();
+            return pc.GetCategory(id);
+        }
+
         public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
             ProductController pc = new ProductController();
             return pc.InsertProductVersion(prodVerToInsert, styleNumber);

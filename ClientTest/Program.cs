@@ -24,6 +24,8 @@ namespace ClientTest {
                             Console.WriteLine(item);
                         }
                     }
+
+                    
                 } catch (CommunicationException e) {
                     Console.WriteLine(e.StackTrace);
                 }

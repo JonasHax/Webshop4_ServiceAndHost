@@ -24,7 +24,7 @@ namespace Services.DataAccess
 
             string insertString;
 
-            insertString = "INSERT INTO Customer(firstName, lastName, custStreet, CustNo, zipCode, email, phoneNumber, hashedPassword) VALUES (@FirstName, @LastName, @CustStreet, @CustNo, @ZipCode, @Email, @PhoneNumber, @HashedPassword)";
+            insertString = "INSERT INTO Customer(firstName, lastName, street, houseNo, zipCode, email, phoneNumber, hashedPassword) VALUES (@FirstName, @LastName, @Street, @HouseNo, @ZipCode, @Email, @PhoneNumber, @HashedPassword)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand createCommand = new SqlCommand(insertString, con))
@@ -33,9 +33,9 @@ namespace Services.DataAccess
                 createCommand.Parameters.Add(fNameParam);
                 SqlParameter lNameParam = new SqlParameter("@LastName", aCustomer.LastName);
                 createCommand.Parameters.Add(lNameParam);
-                SqlParameter CustStreetParam = new SqlParameter("@CustStreet", aCustomer.CustStreet);
+                SqlParameter CustStreetParam = new SqlParameter("@Street", aCustomer.Street);
                 createCommand.Parameters.Add(CustStreetParam);
-                SqlParameter custNoParam = new SqlParameter("@CustNo", aCustomer.CustNo);
+                SqlParameter custNoParam = new SqlParameter("@HouseNo", aCustomer.HouseNo);
                 createCommand.Parameters.Add(custNoParam);
                 SqlParameter zipCodeParam = new SqlParameter("@ZipCode", aCustomer.ZipCode);
                 createCommand.Parameters.Add(zipCodeParam);
