@@ -51,6 +51,11 @@ namespace Services.Service {
             return pc.GetCategory(id);
         }
 
+        public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
+            ProductController pc = new ProductController();
+            return pc.InsertProductVersion(prodVerToInsert, styleNumber);
+        }
+
         //public List<ProductVersion> GetProductVersionsByProductID(int id) {
         //    DataProduct dp = new DataProduct();
         //    return dp.GetProductVersionsByProductID(id);

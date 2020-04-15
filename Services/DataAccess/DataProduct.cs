@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.DataAccess {
+
     public class DataProduct {
         private readonly string _connectionString;
 
@@ -114,6 +115,27 @@ namespace Services.DataAccess {
                     insertCommand.Parameters.AddWithValue("Description", productToInsert.Description);
                     insertCommand.Parameters.AddWithValue("State", productToInsert.State);
                     insertCommand.Parameters.AddWithValue("Price", productToInsert.Price);
+
+                    int rows = insertCommand.ExecuteNonQuery();
+
+                    if (rows > 0) {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand insertCommand = connection.CreateCommand()) {
+                    insertCommand.CommandText = "INSERT INTO ProductVersion VALUES (@StyleNumber, @Stock, @SizeCode, @ColorCode)";
+                    insertCommand.Parameters.AddWithValue("StyleNumber", styleNumber);
+                    insertCommand.Parameters.AddWithValue("Stock", prodVerToInsert.Stock);
+                    insertCommand.Parameters.AddWithValue("SizeCode", prodVerToInsert.SizeCode);
+                    insertCommand.Parameters.AddWithValue("ColorCode", prodVerToInsert.ColorCode);
 
                     int rows = insertCommand.ExecuteNonQuery();
 
