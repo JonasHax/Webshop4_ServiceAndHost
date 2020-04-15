@@ -45,5 +45,11 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.InsertProductVersion(prodVerToInsert, styleNumber);
         }
+
+        public bool InsertProductCategoryRelation(int styleNumber, string category)
+        {
+            DataProduct dp = new DataProduct();
+            return dp.InsertProductCategoryRelation(styleNumber, category);
+        }
     }
 }

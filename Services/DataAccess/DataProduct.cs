@@ -15,7 +15,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZDESKTOP\SQLEXPRESS01; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = DESKTOP-EKHMISL\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
         // Method to get the base product from the database.
@@ -107,42 +107,64 @@ namespace Services.DataAccess {
 
         public bool InsertProduct(Product productToInsert) {
             bool result = false;
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                connection.Open();
-                using (SqlCommand insertCommand = connection.CreateCommand()) {
-                    insertCommand.CommandText = "INSERT INTO Product VALUES (@Name, @Description, @State, @Price)";
-                    insertCommand.Parameters.AddWithValue("Name", productToInsert.Name);
-                    insertCommand.Parameters.AddWithValue("Description", productToInsert.Description);
-                    insertCommand.Parameters.AddWithValue("State", productToInsert.State);
-                    insertCommand.Parameters.AddWithValue("Price", productToInsert.Price);
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand insertCommand = connection.CreateCommand())
+                    {
+                        insertCommand.CommandText = "INSERT INTO Product VALUES (@Name, @Description, @State, @Price)";
+                        insertCommand.Parameters.AddWithValue("Name", productToInsert.Name);
+                        insertCommand.Parameters.AddWithValue("Description", productToInsert.Description);
+                        insertCommand.Parameters.AddWithValue("State", productToInsert.State);
+                        insertCommand.Parameters.AddWithValue("Price", productToInsert.Price);
 
-                    int rows = insertCommand.ExecuteNonQuery();
+                        int rows = insertCommand.ExecuteNonQuery();
 
-                    if (rows > 0) {
-                        result = true;
+                        if (rows > 0)
+                        {
+                            result = true;
+                        }
                     }
                 }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+                result = false;
             }
             return result;
         }
 
         public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
             bool result = false;
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                connection.Open();
-                using (SqlCommand insertCommand = connection.CreateCommand()) {
-                    insertCommand.CommandText = "INSERT INTO ProductVersion VALUES (@StyleNumber, @Stock, @SizeCode, @ColorCode)";
-                    insertCommand.Parameters.AddWithValue("StyleNumber", styleNumber);
-                    insertCommand.Parameters.AddWithValue("Stock", prodVerToInsert.Stock);
-                    insertCommand.Parameters.AddWithValue("SizeCode", prodVerToInsert.SizeCode);
-                    insertCommand.Parameters.AddWithValue("ColorCode", prodVerToInsert.ColorCode);
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand insertCommand = connection.CreateCommand())
+                    {
+                        insertCommand.CommandText = "INSERT INTO ProductVersion VALUES (@StyleNumber, @Stock, @SizeCode, @ColorCode)";
+                        insertCommand.Parameters.AddWithValue("StyleNumber", styleNumber);
+                        insertCommand.Parameters.AddWithValue("Stock", prodVerToInsert.Stock);
+                        insertCommand.Parameters.AddWithValue("SizeCode", prodVerToInsert.SizeCode);
+                        insertCommand.Parameters.AddWithValue("ColorCode", prodVerToInsert.ColorCode);
 
-                    int rows = insertCommand.ExecuteNonQuery();
+                        int rows = insertCommand.ExecuteNonQuery();
 
-                    if (rows > 0) {
-                        result = true;
+                        if (rows > 0)
+                        {
+                            result = true;
+                        }
                     }
                 }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+                result = false;
             }
             return result;
         }
@@ -203,5 +225,37 @@ namespace Services.DataAccess {
 
             return listOfCategories;
         }
+
+        public bool InsertProductCategoryRelation(int styleNumber, string category)
+        {
+            bool result = false;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "INSERT INTO CategoryProduct VALUES (@ID, @Category)";
+                        command.Parameters.AddWithValue("ID", styleNumber);
+                        command.Parameters.AddWithValue("Category", category);
+
+                        int rows = command.ExecuteNonQuery();
+
+                        if (rows > 0)
+                        {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                result = false;
+                Console.WriteLine(e.StackTrace);
+            }
+            return result;
+        }
+
     }
 }

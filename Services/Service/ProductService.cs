@@ -50,6 +50,12 @@ namespace Services.Service {
             return pc.InsertProductVersion(prodVerToInsert, styleNumber);
         }
 
+        public bool InsertProductCategoryRelation(int styleNumber, string category)
+        {
+            ProductController pc = new ProductController();
+            return pc.InsertProductCategoryRelation(styleNumber, category);
+        }
+
         //public List<ProductVersion> GetProductVersionsByProductID(int id) {
         //    DataProduct dp = new DataProduct();
         //    return dp.GetProductVersionsByProductID(id);
