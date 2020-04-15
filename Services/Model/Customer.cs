@@ -17,9 +17,9 @@ namespace Services.Model
         [DataMember]
         public string LastName { get; set; }
         [DataMember]
-        public string CustStreet { get; set; }      
+        public string Street { get; set; }      
         [DataMember]
-        public int CustNo { get; set; }
+        public int HouseNo { get; set; }
         [DataMember]
         public string ZipCode { get; set; }
         [DataMember]
