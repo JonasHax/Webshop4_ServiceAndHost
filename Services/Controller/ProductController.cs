@@ -52,10 +52,14 @@ namespace Services.Controller {
             return dp.InsertProductVersion(prodVerToInsert, styleNumber);
         }
 
-        public bool InsertProductCategoryRelation(int styleNumber, string category)
-        {
+        public bool InsertProductCategoryRelation(int styleNumber, string category) {
             DataProduct dp = new DataProduct();
             return dp.InsertProductCategoryRelation(styleNumber, category);
+        }
+
+        public bool DeleteProductTESTINGPURPOSES() {
+            DataProduct dp = new DataProduct();
+            return dp.DeleteProductTESTINGPURPOSES();
         }
     }
 }

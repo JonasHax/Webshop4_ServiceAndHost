@@ -26,9 +26,6 @@ namespace Services.Service {
             return pc.GetAllProducts();
         }
 
-        public int GetANumber(int number) {
-            return number + 2;
-        }
 
         public Product GetProduct(int id) {
             ProductController pc = new ProductController();
@@ -60,6 +57,11 @@ namespace Services.Service {
         {
             ProductController pc = new ProductController();
             return pc.InsertProductCategoryRelation(styleNumber, category);
+        }
+
+        public bool DeleteProductTESTINGPURPOSES() {
+            ProductController pc = new ProductController();
+            return pc.DeleteProductTESTINGPURPOSES();
         }
 
         //public List<ProductVersion> GetProductVersionsByProductID(int id) {

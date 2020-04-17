@@ -14,8 +14,6 @@ namespace Services.Service {
         [OperationContract]
         Product GetProduct(int id);
 
-        [OperationContract]
-        int GetANumber(int number);
 
         [OperationContract]
         List<Product> GetAllProducts();

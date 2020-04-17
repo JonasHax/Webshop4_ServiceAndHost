@@ -18,7 +18,7 @@ namespace Services.DataAccess
         public DataProduct()
         {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = DESKTOP-EKHMISL\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
         // Method to get the base product from the database.
@@ -286,6 +286,23 @@ namespace Services.DataAccess
             {
                 result = false;
                 Console.WriteLine(e.StackTrace);
+            }
+            return result;
+        }
+
+        public bool DeleteProductTESTINGPURPOSES() {
+            bool result = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand deleteCommand = connection.CreateCommand()) {
+                    deleteCommand.CommandText = "DELETE FROM Product WHERE prodName = 'Test'";
+
+                    int rows = deleteCommand.ExecuteNonQuery();
+
+                    if(rows > 0) {
+                        result = true;
+                    }
+                }
             }
             return result;
         }
