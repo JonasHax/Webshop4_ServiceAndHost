@@ -37,8 +37,8 @@ namespace Services.Service {
         [OperationContract]
         bool InsertProductCategoryRelation(int styleNumber, string category);
 
-        [OperationContract]
-        List<string> GetCategory(int id);
+        //[OperationContract]
+        //List<string> GetCategory(int id);
 
         //[OperationContract]
         //List<ProductVersion> GetProductVersionsByProductID(int id);
