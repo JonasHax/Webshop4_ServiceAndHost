@@ -12,19 +12,19 @@ namespace Test
         private string _connectionString;
         
 
-        [TestMethod]
-        public void CustomerService()
-        {
-            //Arrange
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
+        //[TestMethod]
+        //public void CustomerService()
+        //{
+        //    //Arrange
+        //    _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
 
-            string expectedString = 
-
-
+        //    string expectedString = 
 
 
 
 
-        }
+
+
+        //}
     }
 }
