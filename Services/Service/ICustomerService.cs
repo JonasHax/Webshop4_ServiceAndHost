@@ -12,6 +12,6 @@ namespace Services.Service
     public interface ICustomerService
     {
         [OperationContract]
-        int AddCustomer(Customer customerToAdd);
+        bool AddCustomer(Customer customerToAdd);
     }
 }
