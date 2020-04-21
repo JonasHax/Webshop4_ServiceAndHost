@@ -62,15 +62,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\CustomerController.cs" />
+    <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\ProductController.cs" />
     <Compile Include="DataAccess\DataCustomer.cs" />
+    <Compile Include="DataAccess\DataOrder.cs" />
     <Compile Include="DataAccess\DataProduct.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductVersion.cs" />
+    <Compile Include="Model\SalesLineItem.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\ICustomerService.cs" />
+    <Compile Include="Service\IOrderService.cs" />
     <Compile Include="Service\IProductService.cs" />
+    <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

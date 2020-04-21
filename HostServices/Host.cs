@@ -15,12 +15,18 @@ namespace HostServices
         private static void Main(string[] args)
         {
             using (ServiceHost productServiceHost = new ServiceHost(typeof(ProductService)))
-            {
+            using (ServiceHost orderServiceHost = new ServiceHost(typeof(OrderService)))
+            using (ServiceHost customerServiceHost = new ServiceHost(typeof(CustomerService))) 
+                {
                 productServiceHost.Open();
-                
-                if (productServiceHost.State == CommunicationState.Opened)
+                orderServiceHost.Open();
+                customerServiceHost.Open();
+
+                if (productServiceHost.State == CommunicationState.Opened && orderServiceHost.State == CommunicationState.Opened && customerServiceHost.State == CommunicationState.Opened)
                 {
                     DisplayHostInfo(productServiceHost);
+                    DisplayHostInfo(orderServiceHost);
+                    DisplayHostInfo(customerServiceHost);
                     // Keep the service running until the Enter key is pressed
                     Console.WriteLine("The service is ready.");
                 }
@@ -30,80 +36,11 @@ namespace HostServices
                     Console.WriteLine("Press the Enter key to terminate.");
                 }
 
-
-                using (ServiceHost customerServiceHost = new ServiceHost(typeof(CustomerService)))
-                {
-                    customerServiceHost.Open();
-                    
-                    if (customerServiceHost.State == CommunicationState.Opened)
-                    {
-                        DisplayHostInfo(customerServiceHost);
-                        // Keep the service running until the Enter key is pressed
-                        Console.WriteLine("The service is ready.");
-                        Console.WriteLine("Press the Enter key to terminate service.");
-                        Console.ReadLine();
-                    }
-                    else
-                    {
-                        Console.WriteLine("The service is not ready.");
-                        Console.WriteLine("Press the Enter key to terminate.");
-                        
-                    }
-                }
                 Console.ReadLine();
             }
 
         }
         
-
-
-        //    using (ServiceHost productServiceHost = new ServiceHost(typeof(ProductService)))
-        //    {
-        //        // Open the host and start listening for incoming calls
-        //        productServiceHost.Open();
-        //        //employeeServiceHost.Open();
-
-        //        if (productServiceHost.State == CommunicationState.Opened)
-        //        {
-        //            DisplayHostInfo(productServiceHost);
-        //            //DisplayHostInfo(employeeServiceHost);
-        //            // Keep the service running until the Enter key is pressed
-        //            Console.WriteLine("The service is ready.");
-        //            Console.WriteLine("Press the Enter key to terminate service.");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("The service is not ready.");
-        //            Console.WriteLine("Press the Enter key to terminate.");
-        //        }
-        //        Console.ReadLine();
-        //    }
-        //}
-        //    using (ServiceHost customerServiceHost = new ServiceHost(typeof(CustomerService)))
-        //    {
-        //        // Open the host and start listening for incoming calls
-        //        customerServiceHost.Open();
-        //        //employeeServiceHost.Open();
-
-        //        if (customerServiceHost.State == CommunicationState.Opened)
-        //        {
-        //            DisplayHostInfo(customerServiceHost);
-        //             //DisplayHostInfo(employeeServiceHost);
-        //            // Keep the service running until the Enter key is pressed
-        //            Console.WriteLine("The service is ready.");
-        //            Console.WriteLine("Press the Enter key to terminate service.");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("The service is not ready.");
-        //            Console.WriteLine("Press the Enter key to terminate.");
-        //        }
-        //        Console.ReadLine();
-        //    }
-
-        //    Console.ReadLine();
-        //}
-
 
         private static void DisplayHostInfo(ServiceHost host)
         {
