@@ -10,11 +10,11 @@ namespace Services.Service
 {
     public class CustomerService : ICustomerService
     {
-        public int AddCustomer (Customer customerToAdd)
+        public bool AddCustomer(Customer customerToAdd)
+        
         {
             CustomerController ctrlCustomer = new CustomerController();
-            int insertedCustomerId = ctrlCustomer.InsertCustomer(customerToAdd);
-            return insertedCustomerId;
+            return ctrlCustomer.InsertCustomer(customerToAdd);
         }
 
         

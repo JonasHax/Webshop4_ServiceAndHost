@@ -10,14 +10,13 @@ namespace Services.Controller
 {
     public class CustomerController
     {
-        public int InsertCustomer(Customer customerToInsert)
+        public bool InsertCustomer(Customer customerToInsert)
+        
         {
-            int idInsertedCustomer;
-
             DataCustomer customerDb = new DataCustomer();
-            idInsertedCustomer = customerDb.SaveCustomer(customerToInsert);
-
-            return idInsertedCustomer;
+            return customerDb.SaveCustomer(customerToInsert);
         }
+
+
     }
 }

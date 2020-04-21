@@ -33,5 +33,9 @@ namespace Services.Model
         {
             //Id = Id;
         }
+
+        public Customer()
+        {
+        }
     }
 }
