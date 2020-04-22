@@ -5,13 +5,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Services.DataAccess {
     public class DataOrder {
         private readonly string _connectionString;
 
         public DataOrder() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
         public int AddOrder(Order order) {
@@ -30,28 +31,74 @@ namespace Services.DataAccess {
             return generatedOrderId;
         }
 
-        public bool AddSalesLineItemToOrder(SalesLineItem sli) {
+        public bool AddSalesLineItemToOrder(List<SalesLineItem> sli) {
             bool result = false;
+
+            TransactionOptions to = new TransactionOptions();
+            to.IsolationLevel = IsolationLevel.RepeatableRead;
+
+            using (TransactionScope scope = new TransactionScope()) {
+                using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                    connection.Open();
+
+                    foreach (SalesLineItem lineItem in sli) {
+                        using (SqlCommand getStockCommand = connection.CreateCommand()) {
+                            getStockCommand.CommandText = "SELECT stock FROM ProductVersion WHERE productID = @ProdID AND sizeCode = @SizeCode AND colorCode = @ColorCode";
+                            getStockCommand.Parameters.AddWithValue("ProdID", lineItem.Product.StyleNumber);
+                            getStockCommand.Parameters.AddWithValue("SizeCode", lineItem.ProductVersion.SizeCode);
+                            getStockCommand.Parameters.AddWithValue("ColorCode", lineItem.ProductVersion.ColorCode);
+
+                            var stock = (int)getStockCommand.ExecuteScalar();
+
+                            // tjek om nok på lager
+                            if (stock < lineItem.amount) {
+                                throw new Exception("Not enough in stock of product: " + lineItem.Product.Name);
+                            } else {
+                                // indsæt saleslineitem
+                                using (SqlCommand insertSalesLineCommand = connection.CreateCommand()) {
+                                    insertSalesLineCommand.CommandText = "INSERT INTO SalesLineItem VALUES (@Amount, @Price, @OrderID, @ProductID, @SizeCode, @ColorCode)";
+                                    insertSalesLineCommand.Parameters.AddWithValue("Amount", lineItem.amount);
+                                    insertSalesLineCommand.Parameters.AddWithValue("Price", lineItem.Price);
+                                    insertSalesLineCommand.Parameters.AddWithValue("OrderID", lineItem.Order.OrderId);
+                                    insertSalesLineCommand.Parameters.AddWithValue("ProductID", lineItem.Product.StyleNumber);
+                                    insertSalesLineCommand.Parameters.AddWithValue("SizeCode", lineItem.ProductVersion.SizeCode);
+                                    insertSalesLineCommand.Parameters.AddWithValue("ColorCode", lineItem.ProductVersion.ColorCode);
+                                    // execute
+                                    insertSalesLineCommand.ExecuteNonQuery();
+                                }
+
+                                // opdater lager
+                                using (SqlCommand updateStockCommand = connection.CreateCommand()) {
+                                    updateStockCommand.CommandText = "UPDATE ProductVersion SET stock = stock - @Amount WHERE productID = @ProdID AND sizeCode = @SizeCode AND colorCode = @ColorCode";
+                                    updateStockCommand.Parameters.AddWithValue("Amount", lineItem.amount);
+                                    updateStockCommand.Parameters.AddWithValue("ProdID", lineItem.Product.StyleNumber);
+                                    updateStockCommand.Parameters.AddWithValue("SizeCode", lineItem.ProductVersion.SizeCode);
+                                    updateStockCommand.Parameters.AddWithValue("ColorCode", lineItem.ProductVersion.ColorCode);
+                                    // execute
+                                    updateStockCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }    
+                }
+                scope.Complete(); // end transaction
+                result = true;
+            }
+    
+            return result;
+        }
+
+        public void ChangeOrderToPaid(Order order) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand command = connection.CreateCommand()) {
-                    command.CommandText = "INSERT INTO SalesLineItem VALUES (@Amount, @Price, @OrderID, @ProductID, @SizeCode, @ColorCode)";
-                    command.Parameters.AddWithValue("Amount", sli.amount);
-                    command.Parameters.AddWithValue("Price", sli.Price);
-                    command.Parameters.AddWithValue("OrderID", sli.Order.OrderId);
-                    command.Parameters.AddWithValue("ProductID", sli.Product.StyleNumber);
-                    command.Parameters.AddWithValue("SizeCode", sli.ProductVersion.SizeCode);
-                    command.Parameters.AddWithValue("ColorCode", sli.ProductVersion.ColorCode);
 
-                    int rows = command.ExecuteNonQuery();
+                using (SqlCommand cmd = connection.CreateCommand()) {
+                    cmd.CommandText = "UPDATE SalesOrder SET orderStatus = 'True' WHERE orderID = @OrderID";
+                    cmd.Parameters.AddWithValue("OrderID", order.OrderId);
 
-                    if (rows > 0) {
-                        result = true;
-                    }
-
+                    cmd.ExecuteNonQuery();
                 }
             }
-            return result;
         }
     }
 }

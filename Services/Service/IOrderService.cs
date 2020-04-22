@@ -14,6 +14,9 @@ namespace Services.Service {
         int AddOrder(Order order);
 
         [OperationContract]
-        bool AddSalesLineItemToOrder(SalesLineItem sli);    
+        bool AddSalesLineItemToOrder(List<SalesLineItem> sli);
+
+        [OperationContract]
+        void ChangeOrderToPaid(Order order);
     }
 }

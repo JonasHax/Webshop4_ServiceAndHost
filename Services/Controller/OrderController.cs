@@ -13,9 +13,14 @@ namespace Services.Controller {
             return orderAccess.AddOrder(order);
         }
 
-        public bool AddSalesLineItemToOrder(SalesLineItem sli) {
+        public bool AddSalesLineItemToOrder(List<SalesLineItem> sli) {
             DataOrder orderAccess = new DataOrder();
             return orderAccess.AddSalesLineItemToOrder(sli);
+        }
+
+        public void ChangeOrderToPaid(Order order) {
+            DataOrder orderAccess = new DataOrder();
+            orderAccess.ChangeOrderToPaid(order);
         }
     }
 }

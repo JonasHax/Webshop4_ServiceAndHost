@@ -18,7 +18,7 @@ namespace Services.DataAccess
         public DataProduct()
         {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
         // Method to get the base product from the database.
