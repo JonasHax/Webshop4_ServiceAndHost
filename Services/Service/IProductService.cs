@@ -35,10 +35,17 @@ namespace Services.Service {
         [OperationContract]
         bool InsertProductCategoryRelation(int styleNumber, string category);
 
-        //[OperationContract]
-        //List<string> GetCategory(int id);
+        [OperationContract]
+        bool DeleteProduct(int styleNumber);
 
-        //[OperationContract]
-        //List<ProductVersion> GetProductVersionsByProductID(int id);
+        [OperationContract]
+        bool DeleteProductVersion(int styleNumber, string sizeCode, string colorCode);
+
+        [OperationContract]
+        bool UpdateProductVersion(int styleNumber, string sizeCode, string colorCode, int newStock);
+
+        [OperationContract]
+        bool UpdateProduct(Product productToUpdate);
+
     }
 }

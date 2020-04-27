@@ -26,7 +26,6 @@ namespace Services.Service {
             return pc.GetAllProducts();
         }
 
-
         public Product GetProduct(int id) {
             ProductController pc = new ProductController();
             return pc.GetProduct(id);
@@ -42,19 +41,12 @@ namespace Services.Service {
             return pc.GetAllCategories();
         }
 
-        //public List<string> GetCategory(int id)
-        //{
-        //    ProductController pc = new ProductController();
-        //    return pc.GetCategory(id);
-        //}
-
         public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
             ProductController pc = new ProductController();
             return pc.InsertProductVersion(prodVerToInsert, styleNumber);
         }
 
-        public bool InsertProductCategoryRelation(int styleNumber, string category)
-        {
+        public bool InsertProductCategoryRelation(int styleNumber, string category) {
             ProductController pc = new ProductController();
             return pc.InsertProductCategoryRelation(styleNumber, category);
         }
@@ -64,9 +56,24 @@ namespace Services.Service {
             return pc.DeleteProductTESTINGPURPOSES();
         }
 
-        //public List<ProductVersion> GetProductVersionsByProductID(int id) {
-        //    DataProduct dp = new DataProduct();
-        //    return dp.GetProductVersionsByProductID(id);
-        //}
+        public bool DeleteProduct(int styleNumber) {
+            ProductController pc = new ProductController();
+            return pc.DeleteProduct(styleNumber);
+        }
+
+        public bool DeleteProductVersion(int styleNumber, string sizeCode, string colorCode) {
+            ProductController pc = new ProductController();
+            return pc.DeleteProductVersion(styleNumber, sizeCode, colorCode);
+        }
+
+        public bool UpdateProductVersion(int styleNumber, string sizeCode, string colorCode, int newStock) {
+            ProductController pc = new ProductController();
+            return pc.UpdateProductVersion(styleNumber, sizeCode, colorCode, newStock);
+        }
+
+        public bool UpdateProduct(Product productToUpdate) {
+            ProductController pc = new ProductController();
+            return pc.UpdateProduct(productToUpdate);
+        }
     }
 }

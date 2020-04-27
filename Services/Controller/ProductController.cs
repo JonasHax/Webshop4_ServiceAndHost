@@ -61,5 +61,25 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.DeleteProductTESTINGPURPOSES();
         }
+
+        public bool DeleteProduct(int stylenumber) {
+            DataProduct dp = new DataProduct();
+            return dp.DeleteProduct(stylenumber);
+        }
+
+        public bool DeleteProductVersion(int styleNumber, string sizeCode, string colorCode) {
+            DataProduct dp = new DataProduct();
+            return dp.DeleteProductVersion(styleNumber, sizeCode, colorCode);
+        }
+
+        public bool UpdateProductVersion(int styleNumber, string sizeCode, string colorCode, int newStock) {
+            DataProduct dp = new DataProduct();
+            return dp.UpdateProductVersion(styleNumber, sizeCode, colorCode, newStock);
+        }
+
+        public bool UpdateProduct(Product productToUpdate) {
+            DataProduct dp = new DataProduct();
+            return dp.UpdateProduct(productToUpdate);
+        }
     }
 }
