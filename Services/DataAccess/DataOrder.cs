@@ -12,7 +12,7 @@ namespace Services.DataAccess {
         private readonly string _connectionString;
 
         public DataOrder() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
         public int AddOrder(Order order) {
@@ -37,13 +37,13 @@ namespace Services.DataAccess {
             TransactionOptions to = new TransactionOptions();
             to.IsolationLevel = IsolationLevel.RepeatableRead;
 
-            int deadlockRetries = 3;
+            int deadlockRetries = 0;
 
             using (TransactionScope scope = new TransactionScope()) {
                 using (SqlConnection connection = new SqlConnection(_connectionString)) {
                     connection.Open();
 
-                    while (deadlockRetries > 0)
+                    while (deadlockRetries < 3)
                     {
                         foreach (SalesLineItem lineItem in sli)
                         {
@@ -93,11 +93,11 @@ namespace Services.DataAccess {
                                     }
                                 }
                             }
-                            catch (System.Data.SqlClient.SqlException ex)
+                            catch (SqlException ex)
                             {
                                 // Fejll kode 1205 fra Db = Deadlock
-                                if (ex.Number == 1205)
-                                    deadlockRetries--;
+                                //if (ex.Number == 1205)
+                                    deadlockRetries++;
                             }
                         }
                     }
