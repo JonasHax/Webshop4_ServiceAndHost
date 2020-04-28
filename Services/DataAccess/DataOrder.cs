@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 
 namespace Services.DataAccess {
+
     public class DataOrder {
         private readonly string _connectionString;
 
@@ -79,12 +80,12 @@ namespace Services.DataAccess {
                                 }
                             }
                         }
-                    }    
+                    }
                 }
                 scope.Complete(); // end transaction
                 result = true;
             }
-    
+
             return result;
         }
 
