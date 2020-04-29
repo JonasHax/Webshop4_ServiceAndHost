@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Model {
-
+    // Productklassen er en datacontract = Kan exchange data med service og er serializable
     [DataContract]
     public class Product {
-
+        /// <summary>
+        ///  Getters and setters til produketet.
+        /// </summary>
         [DataMember]
         public int StyleNumber { get; set; }
 

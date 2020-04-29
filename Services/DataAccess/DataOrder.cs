@@ -11,10 +11,12 @@ namespace Services.DataAccess {
     public class DataOrder {
         private readonly string _connectionString;
 
+        // Opretter forbindelse til databasen
         public DataOrder() {
             _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
+        // Tilføjer en ordre til databasen samt giver den et order id som kan vises i desktopklienten
         public int AddOrder(Order order) {
             int generatedOrderId;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
@@ -31,9 +33,11 @@ namespace Services.DataAccess {
             return generatedOrderId;
         }
 
+        //Metode der tilføjer salgslinjen til ordren, her håndteres der samtidighed ved hjælp af repeatable read.
         public bool AddSalesLineItemToOrder(List<SalesLineItem> sli) {
             bool result = false;
 
+            // Laver en transaction option som sætter isolationsniveauet til repeatableread
             TransactionOptions to = new TransactionOptions();
             to.IsolationLevel = IsolationLevel.RepeatableRead;
 
@@ -49,6 +53,7 @@ namespace Services.DataAccess {
                         {
                             try
                             {
+                                // SQL kommando til at få fat i underprodukter.
                                 using (SqlCommand getStockCommand = connection.CreateCommand())
                                 {
                                     getStockCommand.CommandText = "SELECT stock FROM ProductVersion WHERE productID = @ProdID AND sizeCode = @SizeCode AND colorCode = @ColorCode";
@@ -109,6 +114,7 @@ namespace Services.DataAccess {
             return result;
         }
 
+        // Metode der ændre status på ordren.
         public void ChangeOrderToPaid(Order order) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();

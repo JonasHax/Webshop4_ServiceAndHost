@@ -10,7 +10,8 @@ namespace Test {
     [TestClass]
     public class ProductServiceTest {
         ProductService ps = new ProductService();
-
+        
+        // Tester om produktlisten bliver populeret.
         [TestMethod]
         public void TestGetAllProducts()
         {
@@ -18,7 +19,8 @@ namespace Test {
             Assert.IsTrue(productList.Count > 0);
 
         }
-
+        
+        // Metode til at teste om man kan sætte et produkt ind, samtidig bliver det testproduktet slettet fra databasen.
         [TestMethod]
         public void TestInsertProduct()
         {
@@ -35,9 +37,10 @@ namespace Test {
             ps.DeleteProductTESTINGPURPOSES();
         }
 
+        //Tjekker om man kan få et specifikt produkt og dens underprodukter.
         [TestMethod]
         public void TestGetProduct() {
-            int productId = 1;
+            int productId = 2;
 
             Product product = ps.GetProduct(productId);
 
@@ -73,18 +76,21 @@ namespace Test {
 
         //}
 
+        // Tester om størrelser eksistere.
         [TestMethod]
         public void TestGetSizes() {
             List<string> sizesList = ps.GetAllSizes();
             Assert.IsNotNull(sizesList.Count > 0);
         }
 
+        // Tester om listen af farver er populeret.
         [TestMethod]
         public void TestGetColors() {
             List<string> colorList = ps.GetAllColors();
             Assert.IsNotNull(colorList.Count > 0);
         }
 
+        // Tester om der er kategroier.
         [TestMethod]
         public void TestGetCategories() {
             List<string> categoryList = ps.GetAllCategories();

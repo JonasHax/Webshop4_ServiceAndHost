@@ -13,12 +13,12 @@ namespace Test
     {
         private string _connectionString;
         
-
+        // Tester om man kan forbinde til databasen. Husk at ændre data source og navnet på databasen.
         [TestMethod]
         public void CustomerService()
         {
             //Arrange
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
             SqlConnection con = new SqlConnection();
             con.ConnectionString = _connectionString;
             con.Open();

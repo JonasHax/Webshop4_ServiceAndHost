@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Services.Model {
 
-    [DataContract]
+    [DataContract] // Header viser at klassen kan exchange data med service og er serializeable
     public class ProductVersion {
-
+        // Getters and setters til underprodukter.
         [DataMember]
         public Product Product { get; set; }
 
