@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 
 namespace Services.DataAccess {
+
     public class DataOrder {
         private readonly string _connectionString;
 
@@ -64,15 +65,11 @@ namespace Services.DataAccess {
                                     var stock = (int)getStockCommand.ExecuteScalar();
 
                                     // tjek om nok på lager
-                                    if (stock < lineItem.amount)
-                                    {
+                                    if (stock < lineItem.amount) {
                                         throw new Exception("Not enough in stock of product: " + lineItem.Product.Name);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         // indsæt saleslineitem
-                                        using (SqlCommand insertSalesLineCommand = connection.CreateCommand())
-                                        {
+                                        using (SqlCommand insertSalesLineCommand = connection.CreateCommand()) {
                                             insertSalesLineCommand.CommandText = "INSERT INTO SalesLineItem VALUES (@Amount, @Price, @OrderID, @ProductID, @SizeCode, @ColorCode)";
                                             insertSalesLineCommand.Parameters.AddWithValue("Amount", lineItem.amount);
                                             insertSalesLineCommand.Parameters.AddWithValue("Price", lineItem.Price);
@@ -85,8 +82,7 @@ namespace Services.DataAccess {
                                         }
 
                                         // opdater lager
-                                        using (SqlCommand updateStockCommand = connection.CreateCommand())
-                                        {
+                                        using (SqlCommand updateStockCommand = connection.CreateCommand()) {
                                             updateStockCommand.CommandText = "UPDATE ProductVersion SET stock = stock - @Amount WHERE productID = @ProdID AND sizeCode = @SizeCode AND colorCode = @ColorCode";
                                             updateStockCommand.Parameters.AddWithValue("Amount", lineItem.amount);
                                             updateStockCommand.Parameters.AddWithValue("ProdID", lineItem.Product.StyleNumber);
@@ -97,12 +93,10 @@ namespace Services.DataAccess {
                                         }
                                     }
                                 }
-                            }
-                            catch (SqlException ex)
-                            {
+                            } catch (SqlException) {
                                 // Fejll kode 1205 fra Db = Deadlock
                                 //if (ex.Number == 1205)
-                                    deadlockRetries++;
+                                deadlockRetries++;
                             }
                         }
                     }
@@ -110,7 +104,7 @@ namespace Services.DataAccess {
                 scope.Complete(); // end transaction
                 result = true;
             }
-    
+
             return result;
         }
 
