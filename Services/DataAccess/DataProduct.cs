@@ -104,7 +104,7 @@ namespace Services.DataAccess {
 
             return productList;
         }
-
+        // Metode der indsætter produkt i databasen
         public bool InsertProduct(Product productToInsert) {
             bool result = false;
             try {
@@ -131,6 +131,7 @@ namespace Services.DataAccess {
             return result;
         }
 
+        // Metode der indsætter underprodukter
         public bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber) {
             bool result = false;
             try {
@@ -156,7 +157,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
-
+        // Metode der henter alle farverne.
         public List<string> GetAllColors() {
             List<string> listOfColors = new List<string>();
 
@@ -175,7 +176,7 @@ namespace Services.DataAccess {
 
             return listOfColors;
         }
-
+        // Metode der henter alle størrelser.
         public List<string> GetAllSizes() {
             List<string> listOfSizes = new List<string>();
 
@@ -195,6 +196,7 @@ namespace Services.DataAccess {
             return listOfSizes;
         }
 
+        // Metode der henter alle kategorier.
         public List<string> GetAllCategories() {
             List<string> listOfCategories = new List<string>();
 
@@ -214,6 +216,7 @@ namespace Services.DataAccess {
             return listOfCategories;
         }
 
+        // Metode der gør det muligt at sætte en kategori på et produkt.
         public bool InsertProductCategoryRelation(int styleNumber, string category) {
             bool result = false;
             try {
@@ -238,6 +241,7 @@ namespace Services.DataAccess {
             return result;
         }
 
+        // Metoden der bruges i vores testklasse, så vi ikke hele tiden opretter et nyt produkt hver gang testen kører.
         public bool DeleteProductTESTINGPURPOSES() {
             bool result = false;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
@@ -255,6 +259,7 @@ namespace Services.DataAccess {
             return result;
         }
 
+        // Metode til at slette et produkt
         public bool DeleteProduct(int stylenumber) {
             bool result = true;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
@@ -272,7 +277,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
-
+        // Metode til at slette et underprodukt
         public bool DeleteProductVersion(int styleNumber, string sizeCode, string colorCode) {
             bool result = false;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
@@ -291,7 +296,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
-
+        // Metode der opdatere underproduktet
         public bool UpdateProductVersion(int styleNumber, string sizeCode, string colorCode, int newStock) {
             bool result = false;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
@@ -313,6 +318,7 @@ namespace Services.DataAccess {
             return result;
         }
 
+        // Metode der opdatere produktet
         public bool UpdateProduct(Product productToUpdate) {
             bool result = false;
             using (SqlConnection connection = new SqlConnection(_connectionString)) {

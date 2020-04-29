@@ -18,7 +18,7 @@ namespace Services.DataAccess
             _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
-           
+       // Metode der skal gemme en kunde i databasen med de angivne parametre.    
         public bool SaveCustomer(Customer aCustomer)
         {
 
@@ -28,9 +28,11 @@ namespace Services.DataAccess
 
             try
             {
+                // Opretter forbindelse til databasen og bruger stringen til at sætte informationer ind på parametrene
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand createCommand = new SqlCommand(insertString, con))
                 {
+                    // Indsætter kundens informationer.
                     SqlParameter fNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
                     createCommand.Parameters.Add(fNameParam);
                     SqlParameter lNameParam = new SqlParameter("@LastName", aCustomer.LastName);
@@ -49,6 +51,7 @@ namespace Services.DataAccess
                     createCommand.Parameters.Add(hashedPasswordParam);
 
                     con.Open();
+                    // Eksekverer SQL kommandoen
                     int rows = createCommand.ExecuteNonQuery();
 
                     if (rows > 0)

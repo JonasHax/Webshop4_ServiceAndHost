@@ -6,8 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Model {
+
+    // Salgslinje klassen med data contract header (IsReference = true sørger for at hvert objekt i salgslinjen bliver serialiseret)
     [DataContract(IsReference = true)]
     public class SalesLineItem {
+
+        // Getters og setters til salgslinjen.
         [DataMember]
         public int amount { get; set; }
 

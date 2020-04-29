@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Model {
+    // Orderklassen med datacontract header viser at data kan exchanges til service og at det er serializebale 
     [DataContract]
     public class Order {
+    // Getters and setters for making an Order
         [DataMember]
         public int OrderId { get; set; }
         [DataMember]

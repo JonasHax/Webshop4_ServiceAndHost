@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Services.Model
 {
+
+    // Kundeklassen med datacontract header viser at det er serializable og kan exchange data med servicen
     [DataContract]
     public class Customer
     {
-        //[DataMember]
-        //public int Id { get; set; }
+        // Getters og setters til information om kunden
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]
@@ -29,9 +30,10 @@ namespace Services.Model
         [DataMember]
         public string Password { get; set; }
 
+        // Constructor
         public Customer(string firstName, string lastName,  string custStreet, int custNo, string zipCode, string phoneNumber, string email, string password)
         {
-            //Id = Id;
+            
         }
 
         public Customer()

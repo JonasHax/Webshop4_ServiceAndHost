@@ -13,7 +13,7 @@ namespace Test
     {
         private string _connectionString;
         
-
+        // Tester om man kan forbinde til databasen. Husk at ændre data source og navnet på databasen.
         [TestMethod]
         public void CustomerService()
         {
