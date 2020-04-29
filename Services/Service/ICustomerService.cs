@@ -13,5 +13,8 @@ namespace Services.Service
     {
         [OperationContract]
         bool AddCustomer(Customer customerToAdd);
+
+        [OperationContract]
+        Customer GetCustomer(int id);
     }
 }

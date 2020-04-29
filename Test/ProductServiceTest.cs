@@ -37,7 +37,7 @@ namespace Test {
 
         [TestMethod]
         public void TestGetProduct() {
-            int productId = 1;
+            int productId = 2;
 
             Product product = ps.GetProduct(productId);
 

@@ -22,7 +22,7 @@ namespace Test
                 LastName = "Olsen",
                 Street = "Cykelvænget",
                 HouseNo = 8,
-                ZipCode = "8450",
+                ZipCode = "9000",
                 Email = "bolsen@teo.nu",
                 PhoneNumber = "88888888",
                 Password = "123456"
@@ -30,8 +30,24 @@ namespace Test
 
 
             Assert.IsTrue(cs.AddCustomer(customer));
-            
-            
+
+
+        }
+        [TestMethod]
+        public void GetCustomer()
+        {
+            int customerID = 4;
+
+            Customer customer = cs.GetCustomer(customerID);
+
+            Assert.IsNotNull(customer.FirstName);
+            Assert.IsNotNull(customer.LastName);
+            Assert.IsNotNull(customer.Street);
+            Assert.IsNotNull(customer.HouseNo);
+            Assert.IsNotNull(customer.ZipCode);
+            Assert.IsNotNull(customer.PhoneNumber);
+            Assert.IsNotNull(customer.Email);
+            Assert.IsNotNull(customer.Password);
 
         }
     }

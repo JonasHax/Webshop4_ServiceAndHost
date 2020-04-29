@@ -66,5 +66,44 @@ namespace Services.DataAccess
             return result;
         }
 
+        public Customer getCustomer(int id)
+        {
+            Customer foundCustomer = null;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    con.Open();
+                    using (SqlCommand getCommand = con.CreateCommand())
+                    {
+                        getCommand.CommandText = "SELECT * FROM Customer WHERE customerID = @Id";
+                        getCommand.Parameters.AddWithValue("Id", id);
+
+                        SqlDataReader reader = getCommand.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            foundCustomer = new Customer()
+                            {
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Street = reader.GetString(reader.GetOrdinal("Street")),
+                                HouseNo = reader.GetInt32(reader.GetOrdinal("HouseNo")),
+                                ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                                Password = reader.GetString(reader.GetOrdinal("HashedPassword"))
+                            };
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+            
+            return foundCustomer;
+        }
     }
 }

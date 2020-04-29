@@ -17,6 +17,11 @@ namespace Services.Service
             return ctrlCustomer.InsertCustomer(customerToAdd);
         }
 
-        
-    }
+        public Customer GetCustomer(int id)
+        {
+            CustomerController cCtrl = new CustomerController();
+            return cCtrl.GetCustomer(id);
+        }
+
+     }
 }

@@ -17,6 +17,11 @@ namespace Services.Controller
             return customerDb.SaveCustomer(customerToInsert);
         }
 
+        public Customer GetCustomer(int id)
+        {
+            DataCustomer customerDb = new DataCustomer();
+            return customerDb.getCustomer(id);
+        }
 
     }
 }
