@@ -15,7 +15,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
         // Method to get the base product from the database.
@@ -104,6 +104,7 @@ namespace Services.DataAccess {
 
             return productList;
         }
+
         // Metode der indsætter produkt i databasen
         public bool InsertProduct(Product productToInsert) {
             bool result = false;
@@ -157,6 +158,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
+
         // Metode der henter alle farverne.
         public List<string> GetAllColors() {
             List<string> listOfColors = new List<string>();
@@ -176,6 +178,7 @@ namespace Services.DataAccess {
 
             return listOfColors;
         }
+
         // Metode der henter alle størrelser.
         public List<string> GetAllSizes() {
             List<string> listOfSizes = new List<string>();
@@ -277,6 +280,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
+
         // Metode til at slette et underprodukt
         public bool DeleteProductVersion(int styleNumber, string sizeCode, string colorCode) {
             bool result = false;
@@ -296,6 +300,7 @@ namespace Services.DataAccess {
             }
             return result;
         }
+
         // Metode der opdatere underproduktet
         public bool UpdateProductVersion(int styleNumber, string sizeCode, string colorCode, int newStock) {
             bool result = false;

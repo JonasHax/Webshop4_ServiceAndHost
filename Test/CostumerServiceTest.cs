@@ -5,19 +5,15 @@ using System.Text;
 using Services.Service;
 using Services.Model;
 
-namespace Test
-{
+namespace Test {
+
     [TestClass]
-    public class CostumerServiceTest
-    {
-        CustomerService cs = new CustomerService();
+    public class CostumerServiceTest {
+        private CustomerService cs = new CustomerService();
 
         [TestMethod]
-        public void TestInsertCustomer()
-        {
-
-            Customer customer = new Customer()
-            {
+        public void TestInsertCustomer() {
+            Customer customer = new Customer() {
                 FirstName = "Bobby",
                 LastName = "Olsen",
                 Street = "Cykelvænget",
@@ -28,14 +24,11 @@ namespace Test
                 Password = "123456"
             };
 
-
             Assert.IsTrue(cs.AddCustomer(customer));
-
-
         }
+
         [TestMethod]
-        public void GetCustomer()
-        {
+        public void GetCustomer() {
             int customerID = 4;
 
             Customer customer = cs.GetCustomer(customerID);
@@ -48,7 +41,6 @@ namespace Test
             Assert.IsNotNull(customer.PhoneNumber);
             Assert.IsNotNull(customer.Email);
             Assert.IsNotNull(customer.Password);
-
         }
     }
 }
