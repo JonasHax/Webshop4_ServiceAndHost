@@ -15,7 +15,7 @@ namespace Services.DataAccess {
         // Connectionstring for your database, you might need to change it to your own specific address.
         public DataProduct() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
         // Method to get the base product from the database.

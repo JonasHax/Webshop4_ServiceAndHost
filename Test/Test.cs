@@ -17,7 +17,7 @@ namespace Test
         public void CustomerService()
         {
             //Arrange
-           _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+           _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
 
             SqlConnection con = new SqlConnection();
 

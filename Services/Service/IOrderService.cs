@@ -18,5 +18,8 @@ namespace Services.Service {
 
         [OperationContract]
         void ChangeOrderToPaid(Order order);
+
+        [OperationContract]
+        Order GetOrder(int id);
     }
 }

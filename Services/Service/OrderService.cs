@@ -22,5 +22,10 @@ namespace Services.Service {
             OrderController controller = new OrderController();
             controller.ChangeOrderToPaid(order);
         }
+
+        public Order GetOrder(int id) {
+            OrderController controller = new OrderController();
+            return controller.GetOrder(id);
+        }
     }
 }

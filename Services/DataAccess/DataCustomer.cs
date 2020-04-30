@@ -13,7 +13,7 @@ namespace Services.DataAccess {
 
         // Connectionstring for the database.
         public DataCustomer() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
         // Metode der skal gemme en kunde i databasen med de angivne parametre.

@@ -22,5 +22,12 @@ namespace Services.Controller {
             DataOrder orderAccess = new DataOrder();
             orderAccess.ChangeOrderToPaid(order);
         }
+
+        public Order GetOrder(int id)
+        {
+
+            DataOrder orderAccess = new DataOrder();
+            return orderAccess.GetOrder(id);
+        }
     }
 }
