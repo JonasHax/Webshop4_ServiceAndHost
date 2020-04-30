@@ -50,6 +50,7 @@ namespace Services.DataAccess {
 
                     while (deadlockRetries < 3)
                     {
+                        {}
                         foreach (SalesLineItem lineItem in sli)
                         {
                             try
@@ -90,15 +91,24 @@ namespace Services.DataAccess {
                                             updateStockCommand.Parameters.AddWithValue("ColorCode", lineItem.ProductVersion.ColorCode);
                                             // execute
                                             updateStockCommand.ExecuteNonQuery();
+
+                                            deadlockRetries = 10;
                                         }
                                     }
                                 }
-                            } catch (SqlException) {
+                            } catch (System.Data.SqlClient.SqlException ex) {
                                 // Fejll kode 1205 fra Db = Deadlock
-                                //if (ex.Number == 1205)
-                                deadlockRetries++;
+                                if (ex.Number == 1205) {
+                                    //Console.WriteLine(ex.Message);
+                                    deadlockRetries++;
+                                }
+                                else
+                                {
+                                    throw ex;
+                                }
                             }
                         }
+                        
                     }
                 }
                 scope.Complete(); // end transaction
