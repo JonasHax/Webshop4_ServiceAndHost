@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Services.Service;
 using Services.Model;
+using Services.DataAccess;
 
 namespace Test {
 
@@ -25,6 +26,10 @@ namespace Test {
             };
 
             Assert.IsTrue(cs.AddCustomer(customer));
+
+            // Delete the customer from the database again
+            DataCustomer db = new DataCustomer();
+            db.DeleteCustomerTestingPurpose();
         }
 
         [TestMethod]

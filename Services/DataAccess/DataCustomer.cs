@@ -13,15 +13,21 @@ namespace Services.DataAccess {
 
         // Connectionstring for the database.
         public DataCustomer() {
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
         }
 
         // Metode der skal gemme en kunde i databasen med de angivne parametre.
         public bool SaveCustomer(Customer aCustomer) {
             bool result = false;
             string insertString;
-            insertString = "INSERT INTO Customer(firstName, lastName, street, houseNo, zipCode, email, phoneNumber, hashedPassword) VALUES (@FirstName, @LastName, @Street, @HouseNo, @ZipCode, @Email, @PhoneNumber, @HashedPassword)";
 
+            // hash the password and get the salt
+            PasswordHasher passwordHasher = new PasswordHasher();
+            passwordHasher.CreateHash(aCustomer.Password);
+            string hashedPassword = passwordHasher.HashedPassword;
+            string salt = passwordHasher.PasswordSalt;
+
+            insertString = "INSERT INTO Customer(firstName, lastName, street, houseNo, zipCode, email, phoneNumber, passwordSalt, hashedPassword) VALUES (@FirstName, @LastName, @Street, @HouseNo, @ZipCode, @Email, @PhoneNumber, @PasswordSalt, @HashedPassword)";
             try {
                 // Opretter forbindelse til databasen og bruger stringen til at sætte informationer ind på parametrene
                 using (SqlConnection con = new SqlConnection(_connectionString))
@@ -41,7 +47,9 @@ namespace Services.DataAccess {
                     createCommand.Parameters.Add(emailParam);
                     SqlParameter phoneNumberParam = new SqlParameter("@PhoneNumber", aCustomer.PhoneNumber);
                     createCommand.Parameters.Add(phoneNumberParam);
-                    SqlParameter hashedPasswordParam = new SqlParameter("@HashedPassword", aCustomer.Password);
+                    SqlParameter passwordSalt = new SqlParameter("@PasswordSalt", salt);
+                    createCommand.Parameters.Add(passwordSalt);
+                    SqlParameter hashedPasswordParam = new SqlParameter("@HashedPassword", hashedPassword);
                     createCommand.Parameters.Add(hashedPasswordParam);
 
                     con.Open();
@@ -52,10 +60,9 @@ namespace Services.DataAccess {
                         result = true;
                     }
                 }
-            } catch (SqlException ex) {
-                throw new Exception("Der opstod en fejl: " + ex.Message);
-
-                result = false;
+            } catch (SqlException) {
+                //Console.WriteLine(e.StackTrace);
+                throw;
             }
 
             return result;
@@ -86,8 +93,8 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException ex) {
-                throw new Exception("Der opstod en fejl: " + ex.Message);
+            } catch (SqlException e) {
+                Console.WriteLine(e.StackTrace);
             }
 
             return foundCustomer;
@@ -95,14 +102,30 @@ namespace Services.DataAccess {
 
         public Customer CustomerLogin(string email, string password) {
             Customer foundCust = null;
+            string salt;
+
+            // get the salt so the password can be hashed
+            using (SqlConnection con = new SqlConnection(_connectionString)) {
+                con.Open();
+                using (SqlCommand saltCmd = con.CreateCommand()) {
+                    saltCmd.CommandText = "SELECT passwordSalt FROM Customer WHERE email = @Email";
+                    saltCmd.Parameters.AddWithValue("Email", email);
+
+                    salt = (string)saltCmd.ExecuteScalar();
+                }
+            }
+
+            // hash the password
+            PasswordHasher passwordHasher = new PasswordHasher();
+            string hashedPassword = passwordHasher.GetHash(salt, password);
 
             try {
                 using (SqlConnection connection = new SqlConnection(_connectionString)) {
                     connection.Open();
                     using (SqlCommand cmd = connection.CreateCommand()) {
-                        cmd.CommandText = "SELECT * FROM Customer WHERE email = @Email AND hashedPassword = @EnteredPassword";
+                        cmd.CommandText = "SELECT * FROM Customer WHERE email = @Email AND hashedPassword = @HashedPassword";
                         cmd.Parameters.AddWithValue("Email", email);
-                        cmd.Parameters.AddWithValue("EnteredPassword", password);
+                        cmd.Parameters.AddWithValue("HashedPassword", hashedPassword);
 
                         SqlDataReader reader = cmd.ExecuteReader();
                         while (reader.Read()) {
@@ -119,11 +142,23 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException ex) {
-                throw new Exception("Der opstod en fejl: " + ex.Message);
+            } catch (SqlException) {
+                throw;
             }
 
             return foundCust;
+        }
+
+        // Metoder til at slette kunde efter test af oprettelse
+        public void DeleteCustomerTestingPurpose() {
+            using (SqlConnection con = new SqlConnection(_connectionString)) {
+                con.Open();
+                using (SqlCommand cmd = con.CreateCommand()) {
+                    cmd.CommandText = "DELETE FROM Customer WHERE firstName = 'Bobby' AND lastName = 'Olsen' AND email = 'bolsen@teo.nu'";
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
