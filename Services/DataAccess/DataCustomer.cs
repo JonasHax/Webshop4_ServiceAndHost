@@ -13,7 +13,7 @@ namespace Services.DataAccess {
 
         // Connectionstring for the database.
         public DataCustomer() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
         }
 
         // Metode der skal gemme en kunde i databasen med de angivne parametre.
@@ -147,6 +147,18 @@ namespace Services.DataAccess {
             }
 
             return foundCust;
+        }
+
+        // Metoder til at slette kunde efter test af oprettelse
+        public void DeleteCustomerTestingPurpose() {
+            using (SqlConnection con = new SqlConnection(_connectionString)) {
+                con.Open();
+                using (SqlCommand cmd = con.CreateCommand()) {
+                    cmd.CommandText = "DELETE FROM Customer WHERE firstName = 'Bobby' AND lastName = 'Olsen' AND email = 'bolsen@teo.nu'";
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

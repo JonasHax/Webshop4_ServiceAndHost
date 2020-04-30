@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using System.Transactions;
 
 namespace Services.DataAccess {
+
     public class DataOrder {
         private readonly string _connectionString;
 
         // Opretter forbindelse til databasen
         public DataOrder() {
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
         }
 
         // Tilføjer en ordre til databasen samt giver den et order id som kan vises i desktopklienten
@@ -47,16 +48,12 @@ namespace Services.DataAccess {
                 using (SqlConnection connection = new SqlConnection(_connectionString)) {
                     connection.Open();
 
-                    while (deadlockRetries < 3)
-                    {
-                        {}
-                        foreach (SalesLineItem lineItem in sli)
-                        {
-                            try
-                            {
+                    while (deadlockRetries < 3) {
+                        { }
+                        foreach (SalesLineItem lineItem in sli) {
+                            try {
                                 // SQL kommando til at få fat i underprodukter.
-                                using (SqlCommand getStockCommand = connection.CreateCommand())
-                                {
+                                using (SqlCommand getStockCommand = connection.CreateCommand()) {
                                     getStockCommand.CommandText = "SELECT stock FROM ProductVersion WHERE productID = @ProdID AND sizeCode = @SizeCode AND colorCode = @ColorCode";
                                     getStockCommand.Parameters.AddWithValue("ProdID", lineItem.Product.StyleNumber);
                                     getStockCommand.Parameters.AddWithValue("SizeCode", lineItem.ProductVersion.SizeCode);
@@ -100,9 +97,7 @@ namespace Services.DataAccess {
                                 if (ex.Number == 1205) {
                                     //Console.WriteLine(ex.Message);
                                     deadlockRetries++;
-                                }
-                                else
-                                {
+                                } else {
                                     throw ex;
                                 }
                             }
