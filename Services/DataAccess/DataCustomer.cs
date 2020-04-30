@@ -6,32 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace Services.DataAccess
-{
-    public class DataCustomer
-    {
+namespace Services.DataAccess {
+
+    public class DataCustomer {
         private readonly string _connectionString;
 
         // Connectionstring for the database.
-        public DataCustomer()
-        {
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
+        public DataCustomer() {
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
         }
 
-       // Metode der skal gemme en kunde i databasen med de angivne parametre.    
-        public bool SaveCustomer(Customer aCustomer)
-        {
-
+        // Metode der skal gemme en kunde i databasen med de angivne parametre.
+        public bool SaveCustomer(Customer aCustomer) {
             bool result = false;
             string insertString;
             insertString = "INSERT INTO Customer(firstName, lastName, street, houseNo, zipCode, email, phoneNumber, hashedPassword) VALUES (@FirstName, @LastName, @Street, @HouseNo, @ZipCode, @Email, @PhoneNumber, @HashedPassword)";
 
-            try
-            {
+            try {
                 // Opretter forbindelse til databasen og bruger stringen til at sætte informationer ind på parametrene
                 using (SqlConnection con = new SqlConnection(_connectionString))
-                using (SqlCommand createCommand = new SqlCommand(insertString, con))
-                {
+                using (SqlCommand createCommand = new SqlCommand(insertString, con)) {
                     // Indsætter kundens informationer.
                     SqlParameter fNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
                     createCommand.Parameters.Add(fNameParam);
@@ -54,14 +48,11 @@ namespace Services.DataAccess
                     // Eksekverer SQL kommandoen
                     int rows = createCommand.ExecuteNonQuery();
 
-                    if (rows > 0)
-                    {
+                    if (rows > 0) {
                         result = true;
                     }
                 }
-            }
-            catch (SqlException e)
-            {
+            } catch (SqlException e) {
                 Console.WriteLine(e.StackTrace);
                 result = false;
             }
@@ -69,25 +60,19 @@ namespace Services.DataAccess
             return result;
         }
 
-        public Customer getCustomer(int id)
-        {
+        public Customer getCustomer(int id) {
             Customer foundCustomer = null;
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                {
+            try {
+                using (SqlConnection con = new SqlConnection(_connectionString)) {
                     con.Open();
-                    using (SqlCommand getCommand = con.CreateCommand())
-                    {
+                    using (SqlCommand getCommand = con.CreateCommand()) {
                         getCommand.CommandText = "SELECT * FROM Customer WHERE customerID = @Id";
                         getCommand.Parameters.AddWithValue("Id", id);
 
                         SqlDataReader reader = getCommand.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            foundCustomer = new Customer()
-                            {
+                        while (reader.Read()) {
+                            foundCustomer = new Customer() {
                                 FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                                 LastName = reader.GetString(reader.GetOrdinal("LastName")),
                                 Street = reader.GetString(reader.GetOrdinal("Street")),
@@ -100,13 +85,44 @@ namespace Services.DataAccess
                         }
                     }
                 }
-            }
-            catch (SqlException e)
-            {
+            } catch (SqlException e) {
                 Console.WriteLine(e.StackTrace);
             }
-            
+
             return foundCustomer;
+        }
+
+        public Customer CustomerLogin(string email, string password) {
+            Customer foundCust = null;
+
+            try {
+                using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                    connection.Open();
+                    using (SqlCommand cmd = connection.CreateCommand()) {
+                        cmd.CommandText = "SELECT * FROM Customer WHERE email = @Email AND hashedPassword = @EnteredPassword";
+                        cmd.Parameters.AddWithValue("Email", email);
+                        cmd.Parameters.AddWithValue("EnteredPassword", password);
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read()) {
+                            foundCust = new Customer() {
+                                CustomerID = reader.GetInt32(reader.GetOrdinal("customerID")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Street = reader.GetString(reader.GetOrdinal("Street")),
+                                HouseNo = reader.GetInt32(reader.GetOrdinal("HouseNo")),
+                                ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber"))
+                            };
+                        }
+                    }
+                }
+            } catch (SqlException) {
+                throw;
+            }
+
+            return foundCust;
         }
     }
 }

@@ -6,15 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Services.Model;
 
-namespace Services.Service
-{
+namespace Services.Service {
+
     [ServiceContract]
-    public interface ICustomerService
-    {
+    public interface ICustomerService {
+
         [OperationContract]
         bool AddCustomer(Customer customerToAdd);
 
         [OperationContract]
         Customer GetCustomer(int id);
+
+        [OperationContract]
+        Customer CustomerLogin(string email, string password);
     }
 }
