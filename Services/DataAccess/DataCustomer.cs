@@ -60,9 +60,8 @@ namespace Services.DataAccess {
                         result = true;
                     }
                 }
-            } catch (SqlException) {
-                //Console.WriteLine(e.StackTrace);
-                throw;
+            } catch (SqlException ex) {
+                throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
             return result;
@@ -93,8 +92,9 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException e) {
-                Console.WriteLine(e.StackTrace);
+            } catch (SqlException ex) 
+            { 
+                throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
             return foundCustomer;
@@ -142,8 +142,8 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException) {
-                throw;
+            } catch (SqlException ex) { 
+                throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
             return foundCust;
