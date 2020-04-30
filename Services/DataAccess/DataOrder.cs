@@ -20,17 +20,27 @@ namespace Services.DataAccess {
         // Tilføjer en ordre til databasen samt giver den et order id som kan vises i desktopklienten
         public int AddOrder(Order order) {
             int generatedOrderId;
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                connection.Open();
-                using (SqlCommand addCommand = connection.CreateCommand()) {
-                    addCommand.CommandText = "INSERT INTO SalesOrder OUTPUT INSERTED.orderID VALUES (@Date, @State, @CustID, NULL, NULL)";
-                    addCommand.Parameters.AddWithValue("Date", order.Date);
-                    addCommand.Parameters.AddWithValue("State", order.Status);
-                    addCommand.Parameters.AddWithValue("CustID", order.CustomerId);
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand addCommand = connection.CreateCommand())
+                    {
+                        addCommand.CommandText = "INSERT INTO SalesOrder OUTPUT INSERTED.orderID VALUES (@Date, @State, @CustID, NULL, NULL)";
+                        addCommand.Parameters.AddWithValue("Date", order.Date);
+                        addCommand.Parameters.AddWithValue("State", order.Status);
+                        addCommand.Parameters.AddWithValue("CustID", order.CustomerId);
 
-                    generatedOrderId = (int)addCommand.ExecuteScalar();
+                        generatedOrderId = (int)addCommand.ExecuteScalar();
+                    }
                 }
             }
+            catch(SqlException ex)
+            {
+                throw new Exception("Der opstod en fejl: " + ex.Message);
+            }
+
             return generatedOrderId;
         }
 
@@ -50,7 +60,7 @@ namespace Services.DataAccess {
 
                     while (deadlockRetries < 3)
                     {
-                        {}
+                        
                         foreach (SalesLineItem lineItem in sli)
                         {
                             try
@@ -96,7 +106,7 @@ namespace Services.DataAccess {
                                         }
                                     }
                                 }
-                            } catch (System.Data.SqlClient.SqlException ex) {
+                            } catch (SqlException ex) {
                                 // Fejll kode 1205 fra Db = Deadlock
                                 if (ex.Number == 1205) {
                                     //Console.WriteLine(ex.Message);
@@ -104,7 +114,7 @@ namespace Services.DataAccess {
                                 }
                                 else
                                 {
-                                    throw ex;
+                                    throw new Exception("Der opstod en fejl: " + ex.Message);
                                 }
                             }
                         }
@@ -122,12 +132,19 @@ namespace Services.DataAccess {
         public void ChangeOrderToPaid(Order order) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
+                try
+                {
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "UPDATE SalesOrder SET orderStatus = 'True' WHERE orderID = @OrderID";
+                        cmd.Parameters.AddWithValue("OrderID", order.OrderId);
 
-                using (SqlCommand cmd = connection.CreateCommand()) {
-                    cmd.CommandText = "UPDATE SalesOrder SET orderStatus = 'True' WHERE orderID = @OrderID";
-                    cmd.Parameters.AddWithValue("OrderID", order.OrderId);
-
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch(SqlException ex)
+                {
+                    throw new Exception("Der opstod en fejl: " + ex.Message);
                 }
             }
         }

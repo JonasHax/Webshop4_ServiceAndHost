@@ -13,7 +13,7 @@ namespace Services.DataAccess {
 
         // Connectionstring for the database.
         public DataCustomer() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop";
         }
 
         // Metode der skal gemme en kunde i databasen med de angivne parametre.
@@ -52,8 +52,9 @@ namespace Services.DataAccess {
                         result = true;
                     }
                 }
-            } catch (SqlException e) {
-                Console.WriteLine(e.StackTrace);
+            } catch (SqlException ex) {
+                throw new Exception("Der opstod en fejl: " + ex.Message);
+
                 result = false;
             }
 
@@ -85,8 +86,8 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException e) {
-                Console.WriteLine(e.StackTrace);
+            } catch (SqlException ex) {
+                throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
             return foundCustomer;
@@ -118,8 +119,8 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException) {
-                throw;
+            } catch (SqlException ex) {
+                throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
             return foundCust;
