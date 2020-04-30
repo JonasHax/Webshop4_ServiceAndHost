@@ -70,6 +70,7 @@
     <Compile Include="DataAccess\DataProduct.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\PasswordHasher.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductVersion.cs" />
     <Compile Include="Model\SalesLineItem.cs" />
