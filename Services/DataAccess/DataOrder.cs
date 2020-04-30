@@ -14,7 +14,7 @@ namespace Services.DataAccess {
 
         // Opretter forbindelse til databasen
         public DataOrder() {
-            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = CHEDZ-DESKTOP\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
         }
 
         // Tilføjer en ordre til databasen samt giver den et order id som kan vises i desktopklienten
