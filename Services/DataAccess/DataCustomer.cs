@@ -92,8 +92,7 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException ex) 
-            { 
+            } catch (SqlException ex) {
                 throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
@@ -142,7 +141,7 @@ namespace Services.DataAccess {
                         }
                     }
                 }
-            } catch (SqlException ex) { 
+            } catch (SqlException ex) {
                 throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
