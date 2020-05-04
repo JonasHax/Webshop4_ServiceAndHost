@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Services.Model;
 using Services.Service;
+using Services.DataAccess;
 
 //using proxy = ClientTest.ProductService;
 
@@ -80,6 +81,14 @@ namespace ClientTest {
             //Console.WriteLine(foundCustomer.FirstName);
 
             //Console.Read();
+
+            //string email = "hej@hotmail.dk";
+            //string password = "kodeordhehe";
+
+            //DataCustomer db = new DataCustomer();
+            //Customer cust = db.CustomerLogin(email, password);
+            //Console.WriteLine(cust.CustomerID);
+            //Console.ReadLine();
         }
     }
 }

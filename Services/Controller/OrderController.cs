@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Controller {
+
     public class OrderController {
+
         public int AddOrder(Order order) {
             DataOrder orderAccess = new DataOrder();
             return orderAccess.AddOrder(order);
@@ -23,11 +25,14 @@ namespace Services.Controller {
             orderAccess.ChangeOrderToPaid(order);
         }
 
-        public Order GetOrder(int id)
-        {
-
+        public Order GetOrder(int id) {
             DataOrder orderAccess = new DataOrder();
             return orderAccess.GetOrder(id);
+        }
+
+        public List<Order> GetAllOrders() {
+            DataOrder orderAccess = new DataOrder();
+            return orderAccess.GetAllOrders();
         }
     }
 }

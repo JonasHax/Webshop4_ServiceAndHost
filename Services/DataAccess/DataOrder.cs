@@ -156,5 +156,28 @@ namespace Services.DataAccess {
 
             return FoundOrder;
         }
+
+        public List<Order> GetAllOrders() {
+            List<Order> orderList = new List<Order>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand()) {
+                    cmd.CommandText = "SELECT * FROM SalesOrder";
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        Order order = new Order() {
+                            CustomerId = reader.GetInt32(reader.GetOrdinal("customerID")),
+                            OrderId = reader.GetInt32(reader.GetOrdinal("orderID")),
+                            Date = reader.GetDateTime(reader.GetOrdinal("purchaseDate")),
+                            Status = reader.GetBoolean(reader.GetOrdinal("orderStatus"))
+                        };
+                        orderList.Add(order);
+                    }
+                }
+            }
+            return orderList;
+        }
     }
 }

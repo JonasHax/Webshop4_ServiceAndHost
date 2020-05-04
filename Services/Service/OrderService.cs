@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Service {
+
     public class OrderService : IOrderService {
+
         public int AddOrder(Order order) {
             OrderController controller = new OrderController();
             return controller.AddOrder(order);
@@ -21,6 +23,11 @@ namespace Services.Service {
         public void ChangeOrderToPaid(Order order) {
             OrderController controller = new OrderController();
             controller.ChangeOrderToPaid(order);
+        }
+
+        public List<Order> GetAllOrders() {
+            OrderController controller = new OrderController();
+            return controller.GetAllOrders();
         }
 
         public Order GetOrder(int id) {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Service {
+
     [ServiceContract]
     public interface IOrderService {
 
@@ -21,5 +22,8 @@ namespace Services.Service {
 
         [OperationContract]
         Order GetOrder(int id);
+
+        [OperationContract]
+        List<Order> GetAllOrders();
     }
 }

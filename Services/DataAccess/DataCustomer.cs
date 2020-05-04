@@ -61,6 +61,7 @@ namespace Services.DataAccess {
                     }
                 }
             } catch (SqlException ex) {
+                //result = false;
                 throw new Exception("Der opstod en fejl: " + ex.Message);
             }
 
@@ -112,6 +113,10 @@ namespace Services.DataAccess {
 
                     salt = (string)saltCmd.ExecuteScalar();
                 }
+            }
+
+            if (salt == null) {
+                return foundCust;
             }
 
             // hash the password
