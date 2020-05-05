@@ -34,7 +34,7 @@ namespace Test {
 
         [TestMethod]
         public void GetCustomer() {
-            int customerID = 4;
+            int customerID = 63;
 
             Customer customer = cs.GetCustomer(customerID);
 
