@@ -34,5 +34,10 @@ namespace Services.Controller {
             DataOrder orderAccess = new DataOrder();
             return orderAccess.GetAllOrders();
         }
+
+        public List<SalesLineItem> GetSalesLineItemsFromOrderID(int id) {
+            DataOrder orderAccess = new DataOrder();
+            return orderAccess.GetSalesLineItemsFromOrderID(id);
+        }
     }
 }

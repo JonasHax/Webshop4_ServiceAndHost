@@ -34,5 +34,10 @@ namespace Services.Service {
             OrderController controller = new OrderController();
             return controller.GetOrder(id);
         }
+
+        public List<SalesLineItem> GetSalesLineItemsFromOrderID(int id) {
+            OrderController controller = new OrderController();
+            return controller.GetSalesLineItemsFromOrderID(id);
+        }
     }
 }

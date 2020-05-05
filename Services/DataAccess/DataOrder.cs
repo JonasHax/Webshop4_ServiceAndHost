@@ -1,4 +1,5 @@
-﻿using Services.Model;
+﻿using Services.Controller;
+using Services.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -178,6 +179,36 @@ namespace Services.DataAccess {
                 }
             }
             return orderList;
+        }
+
+        public List<SalesLineItem> GetSalesLineItemsFromOrderID(int id) {
+            List<SalesLineItem> list = new List<SalesLineItem>();
+            ProductController prodController = new ProductController();
+
+            using (SqlConnection con = new SqlConnection(_connectionString)) {
+                con.Open();
+                using (SqlCommand cmd = con.CreateCommand()) {
+                    cmd.CommandText = "SELECT * FROM SalesLineItem WHERE orderID = @ID";
+                    cmd.Parameters.AddWithValue("ID", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        SalesLineItem sli = new SalesLineItem() {
+                            amount = reader.GetInt32(reader.GetOrdinal("amount")),
+                            Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                            Order = GetOrder(id),
+                            Product = prodController.GetProduct(reader.GetInt32(reader.GetOrdinal("productID"))),
+                            ProductVersion = new ProductVersion() {
+                                ColorCode = reader.GetString(reader.GetOrdinal("colorCode")),
+                                SizeCode = reader.GetString(reader.GetOrdinal("sizeCode")),
+                            }
+                        };
+                        list.Add(sli);
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }

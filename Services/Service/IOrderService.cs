@@ -25,5 +25,8 @@ namespace Services.Service {
 
         [OperationContract]
         List<Order> GetAllOrders();
+
+        [OperationContract]
+        List<SalesLineItem> GetSalesLineItemsFromOrderID(int id);
     }
 }
