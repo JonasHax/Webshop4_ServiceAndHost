@@ -75,5 +75,10 @@ namespace Services.Service {
             ProductController pc = new ProductController();
             return pc.UpdateProduct(productToUpdate);
         }
+
+        public int GetStock(int styleNumber, string sizeCode, string colorCode) {
+            ProductController pc = new ProductController();
+            return pc.GetStock(styleNumber, sizeCode, colorCode);
+        }
     }
 }

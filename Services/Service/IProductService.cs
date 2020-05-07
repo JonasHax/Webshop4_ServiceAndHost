@@ -14,7 +14,6 @@ namespace Services.Service {
         [OperationContract]
         Product GetProduct(int id);
 
-
         [OperationContract]
         List<Product> GetAllProducts();
 
@@ -32,6 +31,7 @@ namespace Services.Service {
 
         [OperationContract]
         bool InsertProductVersion(ProductVersion prodVerToInsert, int styleNumber);
+
         [OperationContract]
         bool InsertProductCategoryRelation(int styleNumber, string category);
 
@@ -47,5 +47,7 @@ namespace Services.Service {
         [OperationContract]
         bool UpdateProduct(Product productToUpdate);
 
+        [OperationContract]
+        int GetStock(int styleNumber, string sizeCode, string colorCode);
     }
 }

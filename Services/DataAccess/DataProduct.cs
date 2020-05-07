@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -378,6 +379,23 @@ namespace Services.DataAccess {
                 throw new Exception("Der opstod en fejl: " + ex.Message);
             }
             return result;
+        }
+
+        public int GetStock(int styleNumber, string sizeCode, string colorCode) {
+            int stock;
+
+            using (SqlConnection con = new SqlConnection(_connectionString)) {
+                con.Open();
+                using (SqlCommand cmd = con.CreateCommand()) {
+                    cmd.CommandText = "SELECT stock FROM ProductVersion WHERE productID = @StyleNumber AND sizeCode = @SizeCode AND colorCode = @ColorCode";
+                    cmd.Parameters.AddWithValue("StyleNumber", styleNumber);
+                    cmd.Parameters.AddWithValue("SizeCode", sizeCode);
+                    cmd.Parameters.AddWithValue("ColorCode", colorCode);
+
+                    stock = (int)cmd.ExecuteScalar();
+                }
+            }
+            return stock;
         }
     }
 }

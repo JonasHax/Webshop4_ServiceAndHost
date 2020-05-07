@@ -81,5 +81,10 @@ namespace Services.Controller {
             DataProduct dp = new DataProduct();
             return dp.UpdateProduct(productToUpdate);
         }
+
+        public int GetStock(int styleNumber, string sizeCode, string colorCode) {
+            DataProduct dp = new DataProduct();
+            return dp.GetStock(styleNumber, sizeCode, colorCode);
+        }
     }
 }
