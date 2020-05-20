@@ -6,26 +6,22 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace Test
-{
+namespace Test {
+
     [TestClass]
-    public class DbAccessTest
-    {
+    public class DbAccessTest {
         private string _connectionString;
-        
+
         // Tester om man kan forbinde til databasen. Husk at ændre data source og navnet på databasen.
         [TestMethod]
-        public void CustomerService()
-        {
+        public void CustomerService() {
             //Arrange
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop2";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
             SqlConnection con = new SqlConnection();
             con.ConnectionString = _connectionString;
             con.Open();
 
-            
             Assert.IsNotNull(con);
-
         }
     }
 }

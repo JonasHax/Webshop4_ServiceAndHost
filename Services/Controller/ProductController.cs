@@ -31,12 +31,6 @@ namespace Services.Controller {
             return dp.GetAllCategories();
         }
 
-        //public List<string> GetCategory(int id)
-        //{
-        //    DataProduct dp = new DataProduct();
-        //    return dp.GetCategory(id);
-        //}
-
         public List<string> GetAllColors() {
             DataProduct dp = new DataProduct();
             return dp.GetAllColors();

@@ -13,6 +13,7 @@ namespace Services.DataAccess {
 
         // Connectionstring for the database.
         public DataCustomer() {
+            //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
             _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
         }
 

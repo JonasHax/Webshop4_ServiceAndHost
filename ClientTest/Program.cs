@@ -13,6 +13,7 @@ using Services.DataAccess;
 
 namespace ClientTest {
 
+    // Denne klasse er udelukkende for at gruppen har kunne teste småting i løbet af udviklingen
     public class Program {
 
         public static void Main(string[] args) {

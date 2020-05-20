@@ -48,30 +48,6 @@ namespace Test {
             Assert.IsNotNull(product.Price);
         }
 
-        //[TestMethod]
-        //public void TestInsertProductVersionToProduct() {
-        //    // create a product and add it
-        //    Product product = ps.GetProduct(1);
-
-        //    int numberOfProdVer = product.ProductVersions.Count;
-
-        //    // create prodver
-        //    ProductVersion prodVer = new ProductVersion() {
-        //        ColorCode = "Purple",
-        //        SizeCode = "xs",
-        //        Stock = 10
-        //    };
-
-        //    // insert prodver to product
-        //    ps.InsertProductVersion(prodVer, product.StyleNumber);
-
-        //    product = ps.GetProduct(1);
-
-        //    // Assert
-        //    Assert.IsTrue(product.ProductVersions.Count == (numberOfProdVer + 1));
-
-        //}
-
         // Tester om størrelser eksistere.
         [TestMethod]
         public void TestGetSizes() {

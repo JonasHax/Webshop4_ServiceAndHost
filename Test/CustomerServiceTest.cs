@@ -9,7 +9,7 @@ using Services.DataAccess;
 namespace Test {
 
     [TestClass]
-    public class CostumerServiceTest {
+    public class CustomerServiceTest {
         private CustomerService cs = new CustomerService();
 
         [TestMethod]
