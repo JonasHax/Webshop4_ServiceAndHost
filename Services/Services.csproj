@@ -74,6 +74,7 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductVersion.cs" />
     <Compile Include="Model\SalesLineItem.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\ICustomerService.cs" />
     <Compile Include="Service\IOrderService.cs" />
