@@ -14,7 +14,7 @@ namespace Services.DataAccess {
         // Connectionstring for the database.
         public DataCustomer() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
         // Metode der skal gemme en kunde i databasen med de angivne parametre.

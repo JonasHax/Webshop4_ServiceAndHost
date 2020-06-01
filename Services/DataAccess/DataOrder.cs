@@ -16,7 +16,7 @@ namespace Services.DataAccess {
         // Opretter forbindelse til databasen
         public DataOrder() {
             //_connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop3";
+            _connectionString = @"data source = .\SQLEXPRESS; Integrated Security=true; Database=Webshop4";
         }
 
         // Tilføjer en ordre til databasen samt giver den et order id som kan vises i desktopklienten
